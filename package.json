@@ -1,0 +1,26 @@
+{
+  "name": "trishul-sim",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Project TRISHUL-SIM: AI-Enabled Drone & Counter-Drone Threat Simulation Trainer (SIH26247 - MoD / DSSC)",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test-audit.js"
+  },
+  "dependencies": {
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "puppeteer-core": "^24.43.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^6.2.0"
+  }
+}
