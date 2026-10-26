@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRISHUL-SIM // Tactical Gateway & Video Briefing</title>
+  <meta name="description" content="TRISHUL-SIM C-UAS Threat Trainer Portal - Tactical Video Briefing & Main Command Access" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🛡️%3C/text%3E%3C/svg%3E" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       PROJECT TRISHUL-SIM: MILITARY COMMAND & TACTICAL CIC THEME
+       Luxury Cinematic Black-and-Gold Aesthetics
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      --bg-void: #06080c;
+      --bg-deep: #0a0e16;
+      --bg-surface: #101622;
+      --bg-panel: rgba(13, 19, 29, 0.90);
+      --bg-panel-hover: rgba(18, 26, 40, 0.96);
+      
+      /* Tactical Gold Palette */
+      --gold-primary: #d4af37;
+      --gold-bright: #f3cf58;
+      --gold-dim: rgba(212, 175, 55, 0.18);
+      --gold-glow: rgba(212, 175, 55, 0.45);
+      --gold-glow-intense: rgba(243, 207, 88, 0.65);
+      
+      /* Tactical Accents */
+      --radar-green: #00ff66;
+      --radar-dim: rgba(0, 255, 102, 0.15);
+      --radar-glow: rgba(0, 255, 102, 0.4);
+      
+      --hostile-red: #ff2a3b;
+      --hostile-dim: rgba(255, 42, 59, 0.2);
+      
+      --ew-cyan: #00e5ff;
+      --ew-dim: rgba(0, 229, 255, 0.18);
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-tactical: rgba(212, 175, 55, 0.35);
+      --border-tactical-bright: rgba(243, 207, 88, 0.6);
+      
+      --text-primary: #f0f4f9;
+      --text-secondary: #90a0b6;
+      --text-muted: #536275;
+      --text-gold: #e2be4b;
+      
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
+      --font-sans: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+      --font-display: 'Space Grotesk', -apple-system, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-void);
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Tactical Grid Background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.08) 0%, transparent 65%),
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* CRT Scanline & Grain Overlay */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.22) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.015),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.015)
+      );
+      background-size: 100% 3px, 6px 100%;
+      opacity: 0.6;
+    }
+
+    /* Vignette border */
+    .vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.85), inset 0 0 40px rgba(10, 14, 22, 0.9);
+    }
+
+    /* Monospace HUD text */
+    .mono-hud {
+      font-family: var(--font-mono);
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.01em;
+    }
+
+    /* Main Container */
+    .portal-layout {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    /* ════ HEADER ════ */
+    .tactical-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-top: 2px solid var(--gold-primary);
+      border-radius: 6px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .tactical-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .crest-icon {
+      width: 28px;
+      height: 28px;
+      color: var(--gold-primary);
+      filter: drop-shadow(0 0 8px var(--gold-glow));
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gold-bright);
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 255, 102, 0.08);
+      border: 1px solid rgba(0, 255, 102, 0.35);
+      color: var(--radar-green);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--radar-green);
+      box-shadow: 0 0 8px var(--radar-green);
+      animation: pulse-green 1.8s infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 12px var(--radar-green); }
+    }
+
+    .gold-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-tactical);
+      color: var(--gold-bright);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ════ MAIN CONTENT (VIDEO + LINK ONLY) ════ */
+    .portal-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 28px;
+      margin: 28px 0;
+      width: 100%;
+    }
+
+    /* Video Frame Tactical Container */
+    .video-card-wrapper {
+      width: 100%;
+      max-width: 980px;
+      position: relative;
+    }
+
+    .tactical-frame {
+      background: var(--bg-panel);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-tactical);
+      border-radius: 8px;
+      box-shadow: 
+        0 12px 48px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(212, 175, 55, 0.15);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tactical-frame:hover {
+      border-color: var(--border-tactical-bright);
+      box-shadow: 
+        0 16px 56px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(212, 175, 55, 0.25);
+    }
+
+    /* Tactical Corner Reticles */
+    .corner-bracket {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+      z-index: 25;
+      border-color: var(--gold-primary);
+    }
+    .corner-tl { top: -1px; left: -1px; border-top: 2px solid var(--gold-primary); border-left: 2px solid var(--gold-primary); }
+    .corner-tr { top: -1px; right: -1px; border-top: 2px solid var(--gold-primary); border-right: 2px solid var(--gold-primary); }
+    .corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--gold-primary); border-left: 2px solid var(--gold-primary); }
+    .corner-br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--gold-primary); border-right: 2px solid var(--gold-primary); }
+
+    /* Video Card Header */
+    .video-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(10, 14, 22, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .video-telemetry-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .rec-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--hostile-red);
+      font-weight: 700;
+      font-size: 10px;
+    }
+
+    .rec-dot {
+      width: 7px;
+      height: 7px;
+      background-color: var(--hostile-red);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--hostile-red);
+      animation: pulse-red 1.2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-red {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .video-telemetry-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-secondary);
+      font-size: 10px;
+    }
+
+    .telemetry-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gold-text {
+      color: var(--gold-bright);
+    }
+
+    /* Video Aspect Box */
+    .video-screen-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background: #000000;
+      overflow: hidden;
+    }
+
+    .video-screen-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Video Card Tactical Controls / Telemetry Bar */
+    .video-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: rgba(10, 14, 22, 0.95);
+      border-top: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .audio-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-tactical);
+      color: var(--gold-bright);
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+    }
+
+    .audio-btn:hover {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--gold-bright);
+      box-shadow: 0 0 14px var(--gold-glow);
+      transform: translateY(-1px);
+    }
+
+    .audio-btn:active {
+      transform: translateY(1px);
+    }
+
+    .live-clock-readout {
+      color: var(--text-secondary);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ════ 2ND CORE ELEMENT: THE MAIN WEBSITE LINK ════ */
+    .website-cta-wrapper {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    .website-cta-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px;
+      text-decoration: none;
+      background: linear-gradient(135deg, rgba(16, 22, 34, 0.95) 0%, rgba(13, 19, 29, 0.95) 100%);
+      border: 1px solid var(--border-tactical);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(212, 175, 55, 0.12);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    /* Golden Sweep Shimmer Effect */
+    .website-cta-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(243, 207, 88, 0.15), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.7s ease;
+      pointer-events: none;
+    }
+
+    .website-cta-link:hover::before {
+      left: 140%;
+    }
+
+    .website-cta-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold-bright);
+      box-shadow: 
+        0 14px 40px rgba(0, 0, 0, 0.75),
+        0 0 35px var(--gold-glow);
+    }
+
+    /* CTA Left: Icon & Description */
+    .cta-content-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .cta-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-tactical);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .website-cta-link:hover .cta-icon-box {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: var(--gold-bright);
+      color: var(--gold-bright);
+      box-shadow: 0 0 25px var(--gold-glow);
+      transform: scale(1.05);
+    }
+
+    .cta-headings {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cta-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gold-bright);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .cta-subtext {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+
+    /* CTA Right: Launch Arrow & Status */
+    .cta-action-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 2;
+    }
+
+    .cta-status-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--radar-green);
+      background: rgba(0, 255, 102, 0.08);
+      border: 1px solid rgba(0, 255, 102, 0.25);
+      padding: 5px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-align: right;
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .cta-status-tag {
+        display: block;
+      }
+    }
+
+    .launch-button-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-bright) 100%);
+      color: #06080c;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 12px 22px;
+      border-radius: 5px;
+      box-shadow: 0 0 20px var(--gold-glow);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .website-cta-link:hover .launch-button-pill {
+      background: linear-gradient(135deg, var(--gold-bright) 0%, #fff2a3 100%);
+      box-shadow: 0 0 30px var(--gold-glow-intense);
+      transform: translateX(4px);
+    }
+
+    .launch-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .website-cta-link:hover .launch-arrow {
+      transform: translateX(3px);
+    }
+
+    /* ════ FOOTER ════ */
+    .tactical-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-secondary);
+    }
+
+    /* Tactical helper link for changing URLs */
+    .config-hint-btn {
+      background: none;
+      border: none;
+      color: var(--gold-primary);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .config-hint-btn:hover {
+      opacity: 1;
+    }
+
+    /* Modal for Quick Link Switch (Optional on-screen tester) */
+    .config-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .config-modal {
+      width: 100%;
+      max-width: 540px;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-tactical);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+      position: relative;
+    }
+
+    .config-modal h3 {
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--gold-bright);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .config-input-group {
+      margin-top: 14px;
+    }
+
+    .config-input-group label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .config-input {
+      width: 100%;
+      background: #06080c;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 10px 12px;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .config-input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 10px var(--gold-dim);
+    }
+
+    .config-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--gold-primary);
+      border: 1px solid var(--gold-bright);
+      color: #000000;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 11px;
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- CRT Scanlines & Vignette Overlays matching TRISHUL-SIM -->
+  <div class="scanlines"></div>
+  <div class="vignette"></div>
+
+  <div class="portal-layout">
+    <!-- ════ 1. TACTICAL HEADER ════ -->
+    <header class="tactical-header">
+      <div class="brand-section">
+        <svg class="crest-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <div>
+          <div class="brand-title">
+            TRISHUL-SIM <span style="color: var(--gold-primary);">//</span> C-UAS
+          </div>
+          <div class="brand-sub">
+            DEFENCE SERVICES STAFF COLLEGE (DSSC) // SIH26247
+          </div>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="status-pill">
+          <span class="pulse-dot"></span>
+          <span>SYS ONLINE</span>
+        </div>
+        <div class="gold-badge">
+          <span>CLASSIFIED DOCTRINE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ════ 2. MAIN CENTER: AUTOPLAY VIDEO + MAIN WEBSITE LINK ONLY ════ -->
+    <main class="portal-main">
+
+      <!-- ITEM 1: AUTOPLAYING YOUTUBE VIDEO IN TACTICAL FRAME -->
+      <section class="video-card-wrapper" aria-label="Tactical Briefing Video Feed">
+        <div class="tactical-frame">
+          <!-- 4 Corner Reticle Brackets -->
+          <div class="corner-bracket corner-tl"></div>
+          <div class="corner-bracket corner-tr"></div>
+          <div class="corner-bracket corner-bl"></div>
+          <div class="corner-bracket corner-br"></div>
+
+          <!-- Video Top Telemetry Bar -->
+          <div class="video-header-bar">
+            <div class="video-telemetry-left">
+              <span class="rec-indicator">
+                <span class="rec-dot"></span>
+                <span>AUTOPLAY FEED</span>
+              </span>
+              <span style="color: var(--border-tactical);">|</span>
+              <span id="video-title-display">TACTICAL AIR-DEFENSE BRIEFING & DOCTRINE DEMO</span>
+            </div>
+            <div class="video-telemetry-right">
+              <span class="telemetry-item">RES: <span class="gold-text">1080P60</span></span>
+              <span class="telemetry-item">CODEC: <span class="gold-text">VP9 / AV1</span></span>
+              <span class="telemetry-item">LINK: <span style="color: var(--radar-green);">SECURE</span></span>
+            </div>
+          </div>
+
+          <!-- 16:9 Responsive Video Viewport with YouTube Autoplay Embed -->
+          <div class="video-screen-container">
+            <iframe
+              id="yt-player-iframe"
+              src=""
+              title="TRISHUL-SIM Video Briefing"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- Video Bottom Control Bar -->
+          <div class="video-control-bar">
+            <button id="unmute-toggle-btn" class="audio-btn" title="Toggle Audio Stream">
+              <svg id="audio-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <span id="audio-btn-label">AUDIO MUTED (CLICK TO UNMUTE)</span>
+            </button>
+
+            <div class="live-clock-readout">
+              <span style="color: var(--text-muted);">CARRIER DWELL:</span>
+              <span id="carrier-time" class="gold-text">00:00:00</span>
+              <span style="color: var(--border-subtle);">|</span>
+              <span style="color: var(--radar-green);">CH-01 SYNCHRONIZED</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ITEM 2: PROMINENT LINK TO MAIN FRONTEND WEBSITE -->
+      <section class="website-cta-wrapper" aria-label="Access Main Command Application">
+        <a id="main-website-link" href="#" class="website-cta-link" target="_self">
+          <!-- 4 Corner Reticle Accents -->
+          <div class="corner-bracket corner-tl"></div>
+          <div class="corner-bracket corner-tr"></div>
+          <div class="corner-bracket corner-bl"></div>
+          <div class="corner-bracket corner-br"></div>
+
+          <div class="cta-content-left">
+            <div class="cta-icon-box">
+              <!-- Tactical Target Crosshair Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="22" y1="12" x2="18" y2="12"></line>
+                <line x1="6" y1="12" x2="2" y2="12"></line>
+                <line x1="12" y1="6" x2="12" y2="2"></line>
+                <line x1="12" y1="22" x2="12" y2="18"></line>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+            <div class="cta-headings">
+              <div class="cta-kicker">
+                <span class="pulse-dot"></span>
+                <span>DIRECT ACCESS // PRIMARY COMMAND CONSOLE</span>
+              </div>
+              <div id="website-cta-title" class="cta-title">
+                ENTER TRISHUL-SIMULATION SYSTEM
+              </div>
+              <div id="website-cta-sub" class="cta-subtext">
+                Launch Full 3D Multi-Agent Radar, FLIR Thermal Tracking & Counter-UAS Defense Suite
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-action-right">
+            <div class="cta-status-tag">
+              <div>LAT 28°14'N // 71°21'E</div>
+              <div style="color: var(--gold-bright); font-weight: 700;">READY TO DEPLOY</div>
+            </div>
+            <div class="launch-button-pill">
+              <span>LAUNCH APPLICATION</span>
+              <svg class="launch-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </section>
+
+    </main>
+
+    <!-- ════ 3. TACTICAL FOOTER ════ -->
+    <footer class="tactical-footer">
+      <div class="footer-left">
+        <span>PROJECT TRISHUL-SIM // DSSC OPERATIONAL TRAINER</span>
+        <span>•</span>
+        <span>OFFLINE RESILIENT NFR-2 COMPLIANT</span>
+      </div>
+      <div class="footer-right">
+        <span>STATUS: <span style="color: var(--gold-bright);">STANDBY / ACTIVE</span></span>
+        <span>•</span>
+        <button id="open-config-modal-btn" class="config-hint-btn" title="Quickly test with custom URLs">
+          [ EDIT TEST LINKS ]
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Interactive Quick Link Config Modal (For testing custom URLs anytime on screen) -->
+  <div id="config-modal-overlay" class="config-modal-overlay">
+    <div class="config-modal">
+      <div class="corner-bracket corner-tl"></div>
+      <div class="corner-bracket corner-tr"></div>
+      <div class="corner-bracket corner-bl"></div>
+      <div class="corner-bracket corner-br"></div>
+
+      <h3>Configure Target URLs</h3>
+      <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; font-family: var(--font-mono);">
+        Enter any YouTube Video URL/ID and Front-End Website URL below:
+      </p>
+
+      <div class="config-input-group">
+        <label for="cfg-yt-input">YOUTUBE VIDEO LINK OR ID:</label>
+        <input type="text" id="cfg-yt-input" class="config-input" placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+      </div>
+
+      <div class="config-input-group">
+        <label for="cfg-web-input">MAIN FRONTEND WEBSITE LINK:</label>
+        <input type="text" id="cfg-web-input" class="config-input" placeholder="e.g. http://localhost:5173/ or https://your-domain.com" />
+      </div>
+
+      <div class="config-actions">
+        <button id="cfg-cancel-btn" class="btn-secondary">CANCEL</button>
+        <button id="cfg-save-btn" class="btn-primary">APPLY LINKS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CONFIGURATION & INITIALIZATION SCRIPT
+       ══════════════════════════════════════════════════════════════════════ -->
+  <script>
+    // ══════════════════════════════════════════════════════════════════════
+    // 👇 CONFIGURE YOUR LINKS HERE!
+    // Paste any YouTube Video URL / ID and your Frontend Website URL below.
+    // ══════════════════════════════════════════════════════════════════════
+    const CONFIG = {
+      // 1. YouTube Video URL (Accepts watch?v=, youtu.be/, embed/, or raw ID):
+      youtubeUrl: "https://www.youtube.com/watch?v=YfOywbH36p0",
+
+      // 2. Main Website Frontend URL:
+      websiteUrl: "/",
+
+      // Optional Display Titles:
+      websiteTitle: "ENTER TRISHUL-SIMULATION SYSTEM",
+      videoTitle: "TACTICAL AIR-DEFENSE BRIEFING & DOCTRINE DEMO"
+    };
+
+    // Helper: Extract valid 11-char YouTube Video ID from any format
+    function extractYouTubeId(urlOrId) {
+      if (!urlOrId) return "dQw4w9WgXcQ";
+      const clean = urlOrId.trim();
+      // Raw 11-character ID check
+      if (/^[a-zA-Z0-9_-]{11}$/.test(clean)) {
+        return clean;
+      }
+      // Watch URL match (?v=ID or &v=ID)
+      const vMatch = clean.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+      if (vMatch) return vMatch[1];
+      // Shortened URL match (youtu.be/ID)
+      const shortMatch = clean.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+      if (shortMatch) return shortMatch[1];
+      // Embed URL match (/embed/ID)
+      const embedMatch = clean.match(/embed\/([a-zA-Z0-9_-]{11})/);
+      if (embedMatch) return embedMatch[1];
+
+      return clean;
+    }
+
+    // Set up the YouTube Autoplay Player
+    let currentVideoId = extractYouTubeId(CONFIG.youtubeUrl);
+    let isMuted = true;
+
+    function buildEmbedSrc(videoId, muted = true) {
+      // Modern browsers strictly enforce muted autoplay policy
+      // enablejsapi=1 allows controlling audio and state
+      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&playlist=${videoId}&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
+    }
+
+    function initPlayer() {
+      const iframe = document.getElementById("yt-player-iframe");
+      iframe.src = buildEmbedSrc(currentVideoId, isMuted);
+    }
+
+    // Set up the Website Link
+    function updateWebsiteLink() {
+      const linkElem = document.getElementById("main-website-link");
+      linkElem.href = CONFIG.websiteUrl;
+      
+      const titleElem = document.getElementById("website-cta-title");
+      if (CONFIG.websiteTitle) titleElem.textContent = CONFIG.websiteTitle;
+
+      const videoTitleElem = document.getElementById("video-title-display");
+      if (CONFIG.videoTitle) videoTitleElem.textContent = CONFIG.videoTitle;
+    }
+
+    // Toggle Audio on Click
+    const unmuteBtn = document.getElementById("unmute-toggle-btn");
+    const audioLabel = document.getElementById("audio-btn-label");
+    const audioIcon = document.getElementById("audio-icon");
+    const iframeElem = document.getElementById("yt-player-iframe");
+
+    unmuteBtn.addEventListener("click", () => {
+      isMuted = !isMuted;
+      try {
+        // Send postMessage command to YouTube iframe API
+        const command = isMuted ? '{"event":"command","func":"mute","args":""}' : '{"event":"command","func":"unMute","args":""}';
+        iframeElem.contentWindow.postMessage(command, '*');
+      } catch (e) {
+        console.warn("PostMessage not permitted, rebuilding src:", e);
+        iframeElem.src = buildEmbedSrc(currentVideoId, isMuted);
+      }
+
+      if (isMuted) {
+        audioLabel.textContent = "AUDIO MUTED (CLICK TO UNMUTE)";
+        audioIcon.innerHTML = `
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        `;
+      } else {
+        audioLabel.textContent = "AUDIO ACTIVE (CLICK TO MUTE)";
+        audioIcon.innerHTML = `
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        `;
+      }
+    });
+
+    // Real-Time Tactical Carrier Clock
+    const startTime = Date.now();
+    const carrierElem = document.getElementById("carrier-time");
+    function updateClock() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const hrs = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+      const secs = String(elapsed % 60).padStart(2, '0');
+      carrierElem.textContent = `${hrs}:${mins}:${secs}`;
+    }
+    setInterval(updateClock, 1000);
+
+    // Interactive Config Modal for on-screen link testing
+    const modal = document.getElementById("config-modal-overlay");
+    const openModalBtn = document.getElementById("open-config-modal-btn");
+    const closeModalBtn = document.getElementById("cfg-cancel-btn");
+    const saveModalBtn = document.getElementById("cfg-save-btn");
+    const ytInput = document.getElementById("cfg-yt-input");
+    const webInput = document.getElementById("cfg-web-input");
+
+    openModalBtn.addEventListener("click", () => {
+      ytInput.value = CONFIG.youtubeUrl;
+      webInput.value = CONFIG.websiteUrl;
+      modal.style.display = "flex";
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+
+    saveModalBtn.addEventListener("click", () => {
+      if (ytInput.value.trim()) {
+        CONFIG.youtubeUrl = ytInput.value.trim();
+        currentVideoId = extractYouTubeId(CONFIG.youtubeUrl);
+        initPlayer();
+      }
+      if (webInput.value.trim()) {
+        CONFIG.websiteUrl = webInput.value.trim();
+        updateWebsiteLink();
+      }
+      modal.style.display = "none";
+    });
+
+    // Initialize on page load
+    initPlayer();
+    updateWebsiteLink();
+  </script>
+</body>
+</html>
