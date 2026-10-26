@@ -1,0 +1,601 @@
+{
+  "timestamp": "2026-10-26T17:41:02.994Z",
+  "localhost": {
+    "app": {
+      "frames": [
+        {
+          "frameId": "FRAME_1_MISSION_BRIEFING",
+          "name": "Initial Mission Briefing Modal",
+          "detected": true,
+          "description": "Modal presents operational parameters, threat level, and 3 tactical scenarios."
+        },
+        {
+          "frameId": "FRAME_7_AAR_DEBRIEF",
+          "name": "DSSC After-Action Review (AAR) Modal",
+          "detected": true,
+          "details": {
+            "isOpen": true,
+            "grade": "GRADE: FAIL\nINCOMPLETE DRILL",
+            "score": "TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:10\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-84 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 3937m // ALT: 102m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3783m // ALT: 99m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 3816m // ALT: 104m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3683m // ALT: 115m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3791m // ALT: 106m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 3959m // ALT: 118m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3044m // ALT: 83m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 2951m // ALT: 74m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 2992m // ALT: 70m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4699m // ALT: 283m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 3816 M\nALT: 104 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3816 M\nALTITUDE:\n104 M AGL\nSPEED:\n51 KM/H\nHEADING:\n302° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 133° AZ / 2° EL\nAZ:\n133°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n89%\nWEAPON 2: KINETIC NET POD\nAMMO: 7/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER\nDSSC TACTICAL AFTER-ACTION REVIEW (AAR)\nDIRECTING STAFF EVALUATION // INTERIM DEBRIEF (10 ACTIVE INBOUND)\nGRADE: FAIL\nINCOMPLETE DRILL\nCOMBAT READINESS:\n35/100\nCLASSIFICATION ACC:\n33%\nSOFT / HARD KILLS:\n0 / 0\nBASE BREACHES:\n0\nTIME-TO-DETECT\n0.5s\nEW DISCIPLINE\n0%\nAMMO EFFICIENCY\n0%\nAUTONOMOUS TACTICAL DOCTRINE INTELLIGENCE (DSSC EVALUATION ENGINE // OLLAMA LLM READY)\nAnalyzing telemetry against Indian C-UAS doctrine...\nEXPORT DOCTRINE REPORT\nCLOSE REVIEW\nRESTART SCENARIO"
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #1 (EXERCISE DESERT SHIELD)",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE DESERT SHIELD\nENV: CLEAR\nFLIR MODE: DAYTIME (OPTICAL)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #2 (EXERCISE MOUNTAIN SENTINEL)",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE MOUNTAIN SENTINEL\nENV: FOG\nFLIR MODE: NIGHT (BHOT/WHOT)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #3 (EXERCISE COASTAL SWARM (DSSC BENCHMARK))",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE COASTAL SWARM (DSSC BENCHMARK)\nENV: CLEAR\nFLIR MODE: DAYTIME (OPTICAL)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "COMMENCE TACTICAL DRILL",
+          "action": "Close modal and initialize 60Hz physics clock loop",
+          "result": "Modal closed, main tactical CIC HUD visible",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: RADAR",
+          "action": "Switch layout to RADAR mode",
+          "result": "Layout state: hasRadar=true, hasFlir=false",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: FLIR",
+          "action": "Switch layout to FLIR mode",
+          "result": "Layout state: hasRadar=false, hasFlir=true",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: SPLIT",
+          "action": "Switch layout to SPLIT mode",
+          "result": "Layout state: hasRadar=true, hasFlir=true",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "Audio Mute/Unmute Toggle",
+          "action": "Toggle synthetic tactical sound cues",
+          "result": "Toggled from \"Mute Audio\" to \"Enable Audio\"",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "Reset Simulation",
+          "action": "Purge current engagement metrics and reseed scenario boids",
+          "result": "Reset executed successfully",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #1 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1001\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #2 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1002\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #3 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1003\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: WHOT",
+          "action": "Switch thermal infrared shader palette to WHOT",
+          "result": "Activated WHOT shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: BHOT",
+          "action": "Switch thermal infrared shader palette to BHOT",
+          "result": "Activated BHOT shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: IRONBOW",
+          "action": "Switch thermal infrared shader palette to IRONBOW",
+          "result": "Activated IRONBOW shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: NVG",
+          "action": "Switch thermal infrared shader palette to NVG",
+          "result": "Activated NVG shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 1X",
+          "action": "Adjust MWIR optical zoom level to 1X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4049m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3901m // ALT: 102m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 3925m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3801m // ALT: 119m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3909m // ALT: 109m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4076m // ALT: 122m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3354m // ALT: 91m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3244m // ALT: 82m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3289m // ALT: 77m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4915m // ALT: 296m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 35.0° // 1X OPTICAL\nLRF: 3925 M\nALT: 107 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3925 M\nALTITUDE:\n107 M AGL\nSPEED:\n44 KM/H\nHEADING:\n318° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 4X",
+          "action": "Adjust MWIR optical zoom level to 4X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4046m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3898m // ALT: 102m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 3922m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3798m // ALT: 119m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3906m // ALT: 109m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4073m // ALT: 122m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3346m // ALT: 91m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3237m // ALT: 82m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3281m // ALT: 77m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4910m // ALT: 295m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 8.8° // 4X OPTICAL\nLRF: 3922 M\nALT: 107 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3922 M\nALTITUDE:\n107 M AGL\nSPEED:\n45 KM/H\nHEADING:\n318° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 12X",
+          "action": "Adjust MWIR optical zoom level to 12X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4044m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3895m // ALT: 102m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 3920m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3795m // ALT: 119m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3903m // ALT: 109m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4070m // ALT: 122m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3338m // ALT: 91m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3229m // ALT: 81m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3273m // ALT: 77m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4906m // ALT: 295m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 3920 M\nALT: 107 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3920 M\nALTITUDE:\n107 M AGL\nSPEED:\n46 KM/H\nHEADING:\n318° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: QUADCOPTER",
+          "action": "Submit trainee classification hypothesis as QUADCOPTER",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: FPV KAMIKAZE",
+          "action": "Submit trainee classification hypothesis as FPV KAMIKAZE",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: FIXED WING",
+          "action": "Submit trainee classification hypothesis as FIXED WING",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: ALPHA",
+          "action": "Set target engagement priority level to ALPHA",
+          "result": "Priority ALPHA set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: BRAVO",
+          "action": "Set target engagement priority level to BRAVO",
+          "result": "Priority BRAVO set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: CHARLIE",
+          "action": "Set target engagement priority level to CHARLIE",
+          "result": "Priority CHARLIE set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "SNAP TO TARGET (RF Jammer)",
+          "action": "Automatically calculate target azimuth and steer jammer beam",
+          "result": "Azimuth snapped from 0° to 0°",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "EMIT RF JAMMER (Soft-Kill)",
+          "action": "Transmit directional 15° EW jamming cone at target bearing",
+          "result": "Toggled from \"EMIT RF JAMMER\" to \"TRANSMITTING BEAM\", dwell lock: \n    import { injectIntoGlobalHook } from \"/@react-refresh\";\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () => {};\nwindow.$RefreshSig$ = () => (type) => type;\n\n    \n\n    \n    \n    TRISHUL-SIM // Tactical C-UAS Threat Trainer (MoD / DSSC)\n    \n    \n    \n  /*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */\n@layer properties;\n@layer theme, base, components, utilities;\n@layer theme {\n  :root, :host {\n    --font-sans: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\",\n      \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\",\n      \"Segoe UI Symbol\", \"Noto Color Emoji\";\n    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\",\n      \"Courier New\", monospace;\n    --color-red-500: oklch(63.7% 0.237 25.331);\n    --color-red-600: oklch(57.7% 0.245 27.325);\n    --color-gray-200: oklch(92.8% 0.006 264.531);\n    --color-gray-300: oklch(87.2% 0.01 258.338);\n    --color-gray-400: oklch(70.7% 0.022 261.325);\n    --color-gray-500: oklch(55.1% 0.027 264.364);\n    --color-gray-600: oklch(44.6% 0.03 256.802);\n    --color-gray-800: oklch(27.8% 0.033 256.848);\n    --color-black: #000;\n    --color-white: #fff;\n    --spacing: 0.25rem;\n    --container-2xl: 42rem;\n    --container-3xl: 48rem;\n    --font-weight-bold: 700;\n    --tracking-wider: 0.05em;\n    --tracking-widest: 0.1em;\n    --leading-relaxed: 1.625;\n    --radius-sm: 0.25rem;\n    --animate-spin: spin 1s linear infinite;\n    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;\n    --blur-md: 12px;\n    --default-transition-duration: 150ms;\n    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);\n    --default-font-family: var(--font-sans);\n    --default-mono-font-family: var(--font-mono);\n  }\n}\n@layer base {\n  *, ::after, ::before, ::backdrop, ::file-selector-button {\n    box-sizing: border-box;\n    margin: 0;\n    padding: 0;\n    border: 0 solid;\n  }\n  html, :host {\n    line-height: 1.5;\n    -webkit-text-size-adjust: 100%;\n    tab-size: 4;\n    font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\");\n    font-feature-settings: var(--default-font-feature-settings, normal);\n    font-variation-settings: var(--default-font-variation-settings, normal);\n    -webkit-tap-highlight-color: transparent;\n  }\n  hr {\n    height: 0;\n    color: inherit;\n    border-top-width: 1px;\n  }\n  abbr:where([title]) {\n    -webkit-text-decoration: underline dotted;\n    text-decoration: underline dotted;\n  }\n  h1, h2, h3, h4, h5, h6 {\n    font-size: inherit;\n    font-weight: inherit;\n  }\n  a {\n    color: inherit;\n    -webkit-text-decoration: inherit;\n    text-decoration: inherit;\n  }\n  b, strong {\n    font-weight: bolder;\n  }\n  code, kbd, samp, pre {\n    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace);\n    font-feature-settings: var(--default-mono-font-feature-settings, normal);\n    font-variation-settings: var(--default-mono-font-variation-settings, normal);\n    font-size: 1em;\n  }\n  small {\n    font-size: 80%;\n  }\n  sub, sup {\n    font-size: 75%;\n    line-height: 0;\n    position: relative;\n    vertical-align: baseline;\n  }\n  sub {\n    bottom: -0.25em;\n  }\n  sup {\n    top: -0.5em;\n  }\n  table {\n    text-indent: 0;\n    border-color: inherit;\n    border-collapse: collapse;\n  }\n  :-moz-focusring:where(:not(iframe)) {\n    outline: auto;\n  }\n  progress {\n    vertical-align: baseline;\n  }\n  summary {\n    display: list-item;\n  }\n  ol, ul, menu {\n    list-style: none;\n  }\n  img, svg, video, canvas, audio, iframe, embed, object {\n    display: block;\n    vertical-align: middle;\n  }\n  img, video {\n    max-width: 100%;\n    height: auto;\n  }\n  button, input, select, optgroup, textarea, ::file-selector-button {\n    font: inherit;\n    font-feature-settings: inherit;\n    font-variation-settings: inherit;\n    letter-spacing: inherit;\n    color: inherit;\n    border-radius: 0;\n    background-color: transparent;\n    opacity: 1;\n  }\n  :where(select:is([multiple], [size])) optgroup {\n    font-weight: bolder;\n  }\n  :where(select:is([multiple], [size])) optgroup option {\n    padding-inline-start: 20px;\n  }\n  ::file-selector-button {\n    margin-inline-end: 4px;\n  }\n  ::placeholder {\n    opacity: 1;\n  }\n  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {\n    ::placeholder {\n      color: currentcolor;\n      @supports (color: color-mix(in lab, red, red)) {\n        color: color-mix(in oklab, currentcolor 50%, transparent);\n      }\n    }\n  }\n  textarea {\n    resize: vertical;\n  }\n  ::-webkit-search-decoration {\n    -webkit-appearance: none;\n  }\n  ::-webkit-date-and-time-value {\n    min-height: 1lh;\n    text-align: inherit;\n  }\n  ::-webkit-datetime-edit {\n    display: inline-flex;\n  }\n  ::-webkit-datetime-edit-fields-wrapper {\n    padding: 0;\n  }\n  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {\n    padding-block: 0;\n  }\n  ::-webkit-calendar-picker-indicator {\n    line-height: 1;\n  }\n  :-moz-ui-invalid {\n    box-shadow: none;\n  }\n  button, input:where([type=\"button\"], [type=\"reset\"], [type=\"submit\"]), ::file-selector-button {\n    appearance: button;\n  }\n  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {\n    height: auto;\n  }\n  [hidden]:where(:not([hidden=\"until-found\"])) {\n    display: none !important;\n  }\n}\n@layer utilities {\n  .pointer-events-none {\n    pointer-events: none;\n  }\n  .visible {\n    visibility: visible;\n  }\n  .absolute {\n    position: absolute;\n  }\n  .fixed {\n    position: fixed;\n  }\n  .relative {\n    position: relative;\n  }\n  .static {\n    position: static;\n  }\n  .inset-0 {\n    inset: 0px;\n  }\n  .top-2 {\n    top: calc(var(--spacing) * 2);\n  }\n  .top-3 {\n    top: calc(var(--spacing) * 3);\n  }\n  .right-2 {\n    right: calc(var(--spacing) * 2);\n  }\n  .right-3 {\n    right: calc(var(--spacing) * 3);\n  }\n  .bottom-2 {\n    bottom: calc(var(--spacing) * 2);\n  }\n  .bottom-3 {\n    bottom: calc(var(--spacing) * 3);\n  }\n  .left-2 {\n    left: calc(var(--spacing) * 2);\n  }\n  .left-3 {\n    left: calc(var(--spacing) * 3);\n  }\n  .z-10 {\n    z-index: 10;\n  }\n  .z-20 {\n    z-index: 20;\n  }\n  .z-50 {\n    z-index: 50;\n  }\n  .col-span-12 {\n    grid-column: span 12 / span 12;\n  }\n  .container {\n    width: 100%;\n    @media (width >= 40rem) {\n      max-width: 40rem;\n    }\n    @media (width >= 48rem) {\n      max-width: 48rem;\n    }\n    @media (width >= 64rem) {\n      max-width: 64rem;\n    }\n    @media (width >= 80rem) {\n      max-width: 80rem;\n    }\n    @media (width >= 96rem) {\n      max-width: 96rem;\n    }\n  }\n  .my-2 {\n    margin-block: calc(var(--spacing) * 2);\n  }\n  .my-4 {\n    margin-block: calc(var(--spacing) * 4);\n  }\n  .my-5 {\n    margin-block: calc(var(--spacing) * 5);\n  }\n  .mt-1 {\n    margin-top: var(--spacing);\n  }\n  .mt-2 {\n    margin-top: calc(var(--spacing) * 2);\n  }\n  .mt-4 {\n    margin-top: calc(var(--spacing) * 4);\n  }\n  .mb-1 {\n    margin-bottom: var(--spacing);\n  }\n  .mb-1\\.5 {\n    margin-bottom: calc(var(--spacing) * 1.5);\n  }\n  .mb-2 {\n    margin-bottom: calc(var(--spacing) * 2);\n  }\n  .mb-3 {\n    margin-bottom: calc(var(--spacing) * 3);\n  }\n  .mb-4 {\n    margin-bottom: calc(var(--spacing) * 4);\n  }\n  .mb-5 {\n    margin-bottom: calc(var(--spacing) * 5);\n  }\n  .ml-2 {\n    margin-left: calc(var(--spacing) * 2);\n  }\n  .block {\n    display: block;\n  }\n  .flex {\n    display: flex;\n  }\n  .grid {\n    display: grid;\n  }\n  .hidden {\n    display: none;\n  }\n  .inline {\n    display: inline;\n  }\n  .table {\n    display: table;\n  }\n  .h-1 {\n    height: var(--spacing);\n  }\n  .h-1\\.5 {\n    height: calc(var(--spacing) * 1.5);\n  }\n  .h-2 {\n    height: calc(var(--spacing) * 2);\n  }\n  .h-5 {\n    height: calc(var(--spacing) * 5);\n  }\n  .h-12 {\n    height: calc(var(--spacing) * 12);\n  }\n  .h-\\[220px\\] {\n    height: 220px;\n  }\n  .h-auto {\n    height: auto;\n  }\n  .h-full {\n    height: 100%;\n  }\n  .h-screen {\n    height: 100vh;\n  }\n  .max-h-\\[90vh\\] {\n    max-height: 90vh;\n  }\n  .min-h-\\[220px\\] {\n    min-height: 220px;\n  }\n  .min-h-\\[380px\\] {\n    min-height: 380px;\n  }\n  .w-2 {\n    width: calc(var(--spacing) * 2);\n  }\n  .w-2\\.5 {\n    width: calc(var(--spacing) * 2.5);\n  }\n  .w-7 {\n    width: calc(var(--spacing) * 7);\n  }\n  .w-48 {\n    width: calc(var(--spacing) * 48);\n  }\n  .w-full {\n    width: 100%;\n  }\n  .w-screen {\n    width: 100vw;\n  }\n  .max-w-2xl {\n    max-width: var(--container-2xl);\n  }\n  .max-w-3xl {\n    max-width: var(--container-3xl);\n  }\n  .min-w-\\[28px\\] {\n    min-width: 28px;\n  }\n  .min-w-\\[34px\\] {\n    min-width: 34px;\n  }\n  .min-w-\\[210px\\] {\n    min-width: 210px;\n  }\n  .min-w-\\[260px\\] {\n    min-width: 260px;\n  }\n  .flex-1 {\n    flex: 1;\n  }\n  .flex-shrink {\n    flex-shrink: 1;\n  }\n  .border-collapse {\n    border-collapse: collapse;\n  }\n  .transform {\n    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);\n  }\n  .animate-pulse {\n    animation: var(--animate-pulse);\n  }\n  .animate-spin {\n    animation: var(--animate-spin);\n  }\n  .cursor-grab {\n    cursor: grab;\n  }\n  .cursor-pointer {\n    cursor: pointer;\n  }\n  .touch-none {\n    touch-action: none;\n  }\n  .resize {\n    resize: both;\n  }\n  .grid-cols-1 {\n    grid-template-columns: repeat(1, minmax(0, 1fr));\n  }\n  .grid-cols-2 {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n  .grid-cols-3 {\n    grid-template-columns: repeat(3, minmax(0, 1fr));\n  }\n  .grid-cols-12 {\n    grid-template-columns: repeat(12, minmax(0, 1fr));\n  }\n  .flex-col {\n    flex-direction: column;\n  }\n  .flex-wrap {\n    flex-wrap: wrap;\n  }\n  .items-center {\n    align-items: center;\n  }\n  .items-end {\n    align-items: flex-end;\n  }\n  .justify-between {\n    justify-content: space-between;\n  }\n  .justify-center {\n    justify-content: center;\n  }\n  .justify-end {\n    justify-content: flex-end;\n  }\n  .gap-0 {\n    gap: 0px;\n  }\n  .gap-0\\.5 {\n    gap: calc(var(--spacing) * 0.5);\n  }\n  .gap-1 {\n    gap: var(--spacing);\n  }\n  .gap-1\\.5 {\n    gap: calc(var(--spacing) * 1.5);\n  }\n  .gap-2 {\n    gap: calc(var(--spacing) * 2);\n  }\n  .gap-2\\.5 {\n    gap: calc(var(--spacing) * 2.5);\n  }\n  .gap-3 {\n    gap: calc(var(--spacing) * 3);\n  }\n  .gap-4 {\n    gap: calc(var(--spacing) * 4);\n  }\n  .overflow-hidden {\n    overflow: hidden;\n  }\n  .overflow-y-auto {\n    overflow-y: auto;\n  }\n  .rounded {\n    border-radius: 0.25rem;\n  }\n  .rounded-full {\n    border-radius: calc(infinity * 1px);\n  }\n  .rounded-sm {\n    border-radius: var(--radius-sm);\n  }\n  .border {\n    border-style: var(--tw-border-style);\n    border-width: 1px;\n  }\n  .border-2 {\n    border-style: var(--tw-border-style);\n    border-width: 2px;\n  }\n  .border-t {\n    border-top-style: var(--tw-border-style);\n    border-top-width: 1px;\n  }\n  .border-b {\n    border-bottom-style: var(--tw-border-style);\n    border-bottom-width: 1px;\n  }\n  .border-\\[\\#00e5ff\\] {\n    border-color: #00e5ff;\n  }\n  .border-\\[\\#00e5ff\\]\\/40 {\n    border-color: color-mix(in oklab, #00e5ff 40%, transparent);\n  }\n  .border-\\[\\#00ff66\\] {\n    border-color: #00ff66;\n  }\n  .border-\\[\\#d4af37\\] {\n    border-color: #d4af37;\n  }\n  .border-\\[\\#ff2a3b\\] {\n    border-color: #ff2a3b;\n  }\n  .border-\\[\\#ffaa00\\] {\n    border-color: #ffaa00;\n  }\n  .border-\\[\\#ffaa00\\]\\/40 {\n    border-color: color-mix(in oklab, #ffaa00 40%, transparent);\n  }\n  .border-\\[var\\(--border-subtle\\)\\] {\n    border-color: var(--border-subtle);\n  }\n  .border-\\[var\\(--border-tactical\\)\\] {\n    border-color: var(--border-tactical);\n  }\n  .border-gray-800 {\n    border-color: var(--color-gray-800);\n  }\n  .bg-\\[\\#0a0e16\\] {\n    background-color: #0a0e16;\n  }\n  .bg-\\[\\#00e5ff\\] {\n    background-color: #00e5ff;\n  }\n  .bg-\\[\\#00e5ff\\]\\/10 {\n    background-color: color-mix(in oklab, #00e5ff 10%, transparent);\n  }\n  .bg-\\[\\#00e5ff\\]\\/20 {\n    background-color: color-mix(in oklab, #00e5ff 20%, transparent);\n  }\n  .bg-\\[\\#00ff66\\] {\n    background-color: #00ff66;\n  }\n  .bg-\\[\\#00ff66\\]\\/10 {\n    background-color: color-mix(in oklab, #00ff66 10%, transparent);\n  }\n  .bg-\\[\\#00ff66\\]\\/15 {\n    background-color: color-mix(in oklab, #00ff66 15%, transparent);\n  }\n  .bg-\\[\\#06080c\\] {\n    background-color: #06080c;\n  }\n  .bg-\\[\\#d4af37\\] {\n    background-color: #d4af37;\n  }\n  .bg-\\[\\#d4af37\\]\\/10 {\n    background-color: color-mix(in oklab, #d4af37 10%, transparent);\n  }\n  .bg-\\[\\#d4af37\\]\\/15 {\n    background-color: color-mix(in oklab, #d4af37 15%, transparent);\n  }\n  .bg-\\[\\#d4af37\\]\\/20 {\n    background-color: color-mix(in oklab, #d4af37 20%, transparent);\n  }\n  .bg-\\[\\#ff2a3b\\] {\n    background-color: #ff2a3b;\n  }\n  .bg-\\[\\#ff2a3b\\]\\/10 {\n    background-color: color-mix(in oklab, #ff2a3b 10%, transparent);\n  }\n  .bg-\\[\\#ff2a3b\\]\\/15 {\n    background-color: color-mix(in oklab, #ff2a3b 15%, transparent);\n  }\n  .bg-\\[\\#ff3366\\] {\n    background-color: #ff3366;\n  }\n  .bg-\\[\\#ffaa00\\]\\/10 {\n    background-color: color-mix(in oklab, #ffaa00 10%, transparent);\n  }\n  .bg-\\[\\#ffaa00\\]\\/15 {\n    background-color: color-mix(in oklab, #ffaa00 15%, transparent);\n  }\n  .bg-black {\n    background-color: var(--color-black);\n  }\n  .bg-black\\/30 {\n    background-color: color-mix(in srgb, #000 30%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 30%, transparent);\n    }\n  }\n  .bg-black\\/40 {\n    background-color: color-mix(in srgb, #000 40%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 40%, transparent);\n    }\n  }\n  .bg-black\\/50 {\n    background-color: color-mix(in srgb, #000 50%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 50%, transparent);\n    }\n  }\n  .bg-black\\/60 {\n    background-color: color-mix(in srgb, #000 60%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 60%, transparent);\n    }\n  }\n  .bg-black\\/80 {\n    background-color: color-mix(in srgb, #000 80%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 80%, transparent);\n    }\n  }\n  .bg-black\\/85 {\n    background-color: color-mix(in srgb, #000 85%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-black) 85%, transparent);\n    }\n  }\n  .bg-gray-800 {\n    background-color: var(--color-gray-800);\n  }\n  .bg-red-500 {\n    background-color: var(--color-red-500);\n  }\n  .bg-red-500\\/20 {\n    background-color: color-mix(in srgb, oklch(63.7% 0.237 25.331) 20%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-red-500) 20%, transparent);\n    }\n  }\n  .bg-red-600 {\n    background-color: var(--color-red-600);\n  }\n  .bg-transparent {\n    background-color: transparent;\n  }\n  .bg-white {\n    background-color: var(--color-white);\n  }\n  .bg-white\\/5 {\n    background-color: color-mix(in srgb, #fff 5%, transparent);\n    @supports (color: color-mix(in lab, red, red)) {\n      background-color: color-mix(in oklab, var(--color-white) 5%, transparent);\n    }\n  }\n  .bg-gradient-to-r {\n    --tw-gradient-position: to right in oklab;\n    background-image: linear-gradient(var(--tw-gradient-stops));\n  }\n  .from-\\[\\#00ff66\\] {\n    --tw-gradient-from: #00ff66;\n    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));\n  }\n  .from-\\[\\#d4af37\\] {\n    --tw-gradient-from: #d4af37;\n    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));\n  }\n  .via-\\[\\#d4af37\\] {\n    --tw-gradient-via: #d4af37;\n    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);\n    --tw-gradient-stops: var(--tw-gradient-via-stops);\n  }\n  .via-\\[\\#ffaa00\\] {\n    --tw-gradient-via: #ffaa00;\n    --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);\n    --tw-gradient-stops: var(--tw-gradient-via-stops);\n  }\n  .to-\\[\\#00ff66\\] {\n    --tw-gradient-to: #00ff66;\n    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));\n  }\n  .to-\\[\\#ff2a3b\\] {\n    --tw-gradient-to: #ff2a3b;\n    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));\n  }\n  .object-cover {\n    object-fit: cover;\n  }\n  .p-0 {\n    padding: 0px;\n  }\n  .p-0\\.5 {\n    padding: calc(var(--spacing) * 0.5);\n  }\n  .p-1 {\n    padding: var(--spacing);\n  }\n  .p-1\\.5 {\n    padding: calc(var(--spacing) * 1.5);\n  }\n  .p-2 {\n    padding: calc(var(--spacing) * 2);\n  }\n  .p-2\\.5 {\n    padding: calc(var(--spacing) * 2.5);\n  }\n  .p-3 {\n    padding: calc(var(--spacing) * 3);\n  }\n  .p-3\\.5 {\n    padding: calc(var(--spacing) * 3.5);\n  }\n  .p-4 {\n    padding: calc(var(--spacing) * 4);\n  }\n  .p-5 {\n    padding: calc(var(--spacing) * 5);\n  }\n  .p-6 {\n    padding: calc(var(--spacing) * 6);\n  }\n  .px-1 {\n    padding-inline: var(--spacing);\n  }\n  .px-1\\.5 {\n    padding-inline: calc(var(--spacing) * 1.5);\n  }\n  .px-2 {\n    padding-inline: calc(var(--spacing) * 2);\n  }\n  .px-2\\.5 {\n    padding-inline: calc(var(--spacing) * 2.5);\n  }\n  .px-3 {\n    padding-inline: calc(var(--spacing) * 3);\n  }\n  .px-4 {\n    padding-inline: calc(var(--spacing) * 4);\n  }\n  .px-6 {\n    padding-inline: calc(var(--spacing) * 6);\n  }\n  .py-0 {\n    padding-block: 0px;\n  }\n  .py-0\\.5 {\n    padding-block: calc(var(--spacing) * 0.5);\n  }\n  .py-1 {\n    padding-block: var(--spacing);\n  }\n  .py-1\\.5 {\n    padding-block: calc(var(--spacing) * 1.5);\n  }\n  .py-2 {\n    padding-block: calc(var(--spacing) * 2);\n  }\n  .py-8 {\n    padding-block: calc(var(--spacing) * 8);\n  }\n  .pt-1 {\n    padding-top: var(--spacing);\n  }\n  .pt-2 {\n    padding-top: calc(var(--spacing) * 2);\n  }\n  .pr-1 {\n    padding-right: var(--spacing);\n  }\n  .pb-1 {\n    padding-bottom: var(--spacing);\n  }\n  .pb-2 {\n    padding-bottom: calc(var(--spacing) * 2);\n  }\n  .pb-3 {\n    padding-bottom: calc(var(--spacing) * 3);\n  }\n  .text-center {\n    text-align: center;\n  }\n  .text-right {\n    text-align: right;\n  }\n  .font-mono {\n    font-family: var(--font-mono);\n  }\n  .text-\\[8px\\] {\n    font-size: 8px;\n  }\n  .text-\\[9px\\] {\n    font-size: 9px;\n  }\n  .text-\\[10px\\] {\n    font-size: 10px;\n  }\n  .text-\\[11px\\] {\n    font-size: 11px;\n  }\n  .text-\\[12px\\] {\n    font-size: 12px;\n  }\n  .text-\\[13px\\] {\n    font-size: 13px;\n  }\n  .text-\\[14px\\] {\n    font-size: 14px;\n  }\n  .text-\\[15px\\] {\n    font-size: 15px;\n  }\n  .text-\\[16px\\] {\n    font-size: 16px;\n  }\n  .text-\\[18px\\] {\n    font-size: 18px;\n  }\n  .leading-relaxed {\n    --tw-leading: var(--leading-relaxed);\n    line-height: var(--leading-relaxed);\n  }\n  .font-bold {\n    --tw-font-weight: var(--font-weight-bold);\n    font-weight: var(--font-weight-bold);\n  }\n  .tracking-\\[0\\.3em\\] {\n    --tw-tracking: 0.3em;\n    letter-spacing: 0.3em;\n  }\n  .tracking-\\[0\\.15em\\] {\n    --tw-tracking: 0.15em;\n    letter-spacing: 0.15em;\n  }\n  .tracking-wider {\n    --tw-tracking: var(--tracking-wider);\n    letter-spacing: var(--tracking-wider);\n  }\n  .tracking-widest {\n    --tw-tracking: var(--tracking-widest);\n    letter-spacing: var(--tracking-widest);\n  }\n  .whitespace-nowrap {\n    white-space: nowrap;\n  }\n  .whitespace-pre-line {\n    white-space: pre-line;\n  }\n  .text-\\[\\#00e5ff\\] {\n    color: #00e5ff;\n  }\n  .text-\\[\\#00ff66\\] {\n    color: #00ff66;\n  }\n  .text-\\[\\#d4af37\\] {\n    color: #d4af37;\n  }\n  .text-\\[\\#ff2a3b\\] {\n    color: #ff2a3b;\n  }\n  .text-\\[\\#ff4455\\] {\n    color: #ff4455;\n  }\n  .text-\\[\\#ffaa00\\] {\n    color: #ffaa00;\n  }\n  .text-black {\n    color: var(--color-black);\n  }\n  .text-gray-200 {\n    color: var(--color-gray-200);\n  }\n  .text-gray-300 {\n    color: var(--color-gray-300);\n  }\n  .text-gray-400 {\n    color: var(--color-gray-400);\n  }\n  .text-gray-500 {\n    color: var(--color-gray-500);\n  }\n  .text-gray-600 {\n    color: var(--color-gray-600);\n  }\n  .text-white {\n    color: var(--color-white);\n  }\n  .uppercase {\n    text-transform: uppercase;\n  }\n  .tabular-nums {\n    --tw-numeric-spacing: tabular-nums;\n    font-variant-numeric: var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,);\n  }\n  .underline {\n    text-decoration-line: underline;\n  }\n  .accent-\\[\\#00e5ff\\] {\n    accent-color: #00e5ff;\n  }\n  .accent-\\[\\#d4af37\\] {\n    accent-color: #d4af37;\n  }\n  .opacity-40 {\n    opacity: 40%;\n  }\n  .shadow {\n    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .shadow-\\[0_0_12px_rgba\\(212\\,175\\,55\\,0\\.5\\)\\] {\n    --tw-shadow: 0 0 12px var(--tw-shadow-color, rgba(212,175,55,0.5));\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .shadow-\\[0_0_15px_rgba\\(0\\,229\\,255\\,0\\.6\\)\\] {\n    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(0,229,255,0.6));\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .shadow-\\[0_0_15px_rgba\\(212\\,175\\,55\\,0\\.4\\)\\] {\n    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(212,175,55,0.4));\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .shadow-\\[0_0_15px_rgba\\(212\\,175\\,55\\,0\\.35\\)\\] {\n    --tw-shadow: 0 0 15px var(--tw-shadow-color, rgba(212,175,55,0.35));\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .ring {\n    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .ring-1 {\n    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);\n    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);\n  }\n  .ring-\\[\\#d4af37\\] {\n    --tw-ring-color: #d4af37;\n  }\n  .outline {\n    outline-style: var(--tw-outline-style);\n    outline-width: 1px;\n  }\n  .drop-shadow {\n    --tw-drop-shadow-size: drop-shadow(0 1px 2px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.1))) drop-shadow(0 1px 1px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.06)));\n    --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow( 0 1px 1px rgb(0 0 0 / 0.06));\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .filter {\n    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);\n  }\n  .backdrop-blur {\n    --tw-backdrop-blur: blur(8px);\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .backdrop-blur-md {\n    --tw-backdrop-blur: blur(var(--blur-md));\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .backdrop-filter {\n    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);\n  }\n  .transition {\n    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n  .transition-all {\n    transition-property: all;\n    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n    transition-duration: var(--tw-duration, var(--default-transition-duration));\n  }\n  .duration-150 {\n    --tw-duration: 150ms;\n    transition-duration: 150ms;\n  }\n  .duration-200 {\n    --tw-duration: 200ms;\n    transition-duration: 200ms;\n  }\n  .duration-300 {\n    --tw-duration: 300ms;\n    transition-duration: 300ms;\n  }\n  @media (hover: hover) {\n    .hover\\:border-\\[\\#00e5ff\\]:hover {\n      border-color: #00e5ff;\n    }\n    .hover\\:border-gray-500:hover {\n      border-color: var(--color-gray-500);\n    }\n    .hover\\:bg-\\[\\#00e5ff\\]\\/25:hover {\n      background-color: color-mix(in oklab, #00e5ff 25%, transparent);\n    }\n    .hover\\:bg-\\[\\#f3cf58\\]:hover {\n      background-color: #f3cf58;\n    }\n    .hover\\:bg-white\\/5:hover {\n      background-color: color-mix(in srgb, #fff 5%, transparent);\n    }\n    @supports (color: color-mix(in lab, red, red)) {\n      .hover\\:bg-white\\/5:hover {\n        background-color: color-mix(in oklab, var(--color-white) 5%, transparent);\n      }\n    }\n    .hover\\:text-white:hover {\n      color: var(--color-white);\n    }\n  }\n  .active\\:cursor-grabbing:active {\n    cursor: grabbing;\n  }\n  .disabled\\:opacity-40:disabled {\n    opacity: 40%;\n  }\n  @media (width >= 48rem) {\n    .md\\:inline {\n      display: inline;\n    }\n    .md\\:w-auto {\n      width: auto;\n    }\n    .md\\:grid-cols-3 {\n      grid-template-columns: repeat(3, minmax(0, 1fr));\n    }\n    .md\\:grid-cols-4 {\n      grid-template-columns: repeat(4, minmax(0, 1fr));\n    }\n    .md\\:flex-row {\n      flex-direction: row;\n    }\n  }\n  @media (width >= 64rem) {\n    .lg\\:col-span-3 {\n      grid-column: span 3 / span 3;\n    }\n    .lg\\:col-span-5 {\n      grid-column: span 5 / span 5;\n    }\n    .lg\\:col-span-7 {\n      grid-column: span 7 / span 7;\n    }\n    .lg\\:col-span-9 {\n      grid-column: span 9 / span 9;\n    }\n    .lg\\:flex {\n      display: flex;\n    }\n    .lg\\:grid-cols-12 {\n      grid-template-columns: repeat(12, minmax(0, 1fr));\n    }\n  }\n  @media (width >= 80rem) {\n    .xl\\:col-span-4 {\n      grid-column: span 4 / span 4;\n    }\n    .xl\\:col-span-8 {\n      grid-column: span 8 / span 8;\n    }\n  }\n}\n:root {\n  --bg-void: #06080c;\n  --bg-deep: #0a0e16;\n  --bg-surface: #101622;\n  --bg-panel: rgba(13, 19, 29, 0.88);\n  --bg-panel-hover: rgba(18, 26, 40, 0.95);\n  --gold-primary: #d4af37;\n  --gold-bright: #f3cf58;\n  --gold-dim: rgba(212, 175, 55, 0.18);\n  --gold-glow: rgba(212, 175, 55, 0.45);\n  --radar-green: #00ff66;\n  --radar-dim: rgba(0, 255, 102, 0.15);\n  --radar-glow: rgba(0, 255, 102, 0.4);\n  --hostile-red: #ff2a3b;\n  --hostile-dim: rgba(255, 42, 59, 0.2);\n  --hostile-glow: rgba(255, 42, 59, 0.5);\n  --ew-cyan: #00e5ff;\n  --ew-dim: rgba(0, 229, 255, 0.18);\n  --ew-glow: rgba(0, 229, 255, 0.45);\n  --border-subtle: rgba(255, 255, 255, 0.1);\n  --border-tactical: rgba(212, 175, 55, 0.35);\n  --border-active: rgba(0, 255, 102, 0.45);\n  --text-primary: #f0f4f9;\n  --text-secondary: #90a0b6;\n  --text-muted: #536275;\n  --text-gold: #e2be4b;\n  --font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', 'Courier New', monospace;\n  --font-sans: 'Inter', -apple-system, 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;\n  --font-display: 'Space Grotesk', -apple-system, 'Segoe UI', system-ui, sans-serif;\n}\n* {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\nhtml, body, #root {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  overflow: hidden;\n  background-color: var(--bg-void);\n  font-family: var(--font-sans);\n  color: var(--text-primary);\n  -webkit-font-smoothing: antialiased;\n  user-select: none;\n}\n::-webkit-scrollbar {\n  width: 4px;\n  height: 4px;\n}\n::-webkit-scrollbar-track {\n  background: rgba(10, 14, 22, 0.6);\n}\n::-webkit-scrollbar-thumb {\n  background: var(--gold-dim);\n  border-radius: 2px;\n}\n::-webkit-scrollbar-thumb:hover {\n  background: var(--gold-primary);\n}\n.scanlines {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 9999;\n  background: linear-gradient( rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50% ), linear-gradient( 90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02) );\n  background-size: 100% 3px, 6px 100%;\n  opacity: 0.5;\n}\n.vignette {\n  position: fixed;\n  inset: 0;\n  pointer-events: none;\n  z-index: 9998;\n  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.75), inset 0 0 30px rgba(10, 14, 22, 0.85);\n}\n.tactical-panel {\n  background: var(--bg-panel);\n  backdrop-filter: blur(16px);\n  -webkit-backdrop-filter: blur(16px);\n  border: 1px solid var(--border-subtle);\n  border-radius: 6px;\n  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);\n  position: relative;\n  overflow: hidden;\n}\n.tactical-panel::before {\n  content: '';\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 1px;\n  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);\n}\n.tactical-corner-tl {\n  position: relative;\n}\n.tactical-corner-tl::after {\n  content: '';\n  position: absolute;\n  top: -1px;\n  left: -1px;\n  width: 8px;\n  height: 8px;\n  border-top: 2px solid var(--gold-primary);\n  border-left: 2px solid var(--gold-primary);\n  pointer-events: none;\n}\n.mono-hud {\n  font-family: var(--font-mono);\n  font-feature-settings: \"tnum\";\n  font-variant-numeric: tabular-nums;\n  letter-spacing: -0.02em;\n}\n.btn-tactical {\n  font-family: var(--font-mono);\n  font-size: 0.75rem;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  padding: 8px 14px;\n  border-radius: 4px;\n  border: 1px solid var(--border-tactical);\n  background: rgba(212, 175, 55, 0.08);\n  color: var(--gold-bright);\n  cursor: pointer;\n  transition: all 0.15s ease-in-out;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 6px;\n}\n.btn-tactical:hover {\n  background: rgba(212, 175, 55, 0.22);\n  border-color: var(--gold-primary);\n  box-shadow: 0 0 12px var(--gold-glow);\n  transform: translateY(-1px);\n}\n.btn-tactical:active {\n  transform: translateY(1px);\n}\n.btn-hostile {\n  border-color: rgba(255, 42, 59, 0.45);\n  background: rgba(255, 42, 59, 0.12);\n  color: #ff6675;\n}\n.btn-hostile:hover {\n  background: rgba(255, 42, 59, 0.28);\n  border-color: var(--hostile-red);\n  box-shadow: 0 0 12px var(--hostile-glow);\n}\n.btn-ew {\n  border-color: rgba(0, 229, 255, 0.45);\n  background: rgba(0, 229, 255, 0.12);\n  color: #55eeff;\n}\n.btn-ew:hover {\n  background: rgba(0, 229, 255, 0.28);\n  border-color: var(--ew-cyan);\n  box-shadow: 0 0 12px var(--ew-glow);\n}\n.badge-gold {\n  background: var(--gold-dim);\n  border: 1px solid var(--border-tactical);\n  color: var(--gold-bright);\n  padding: 2px 7px;\n  border-radius: 3px;\n  font-family: var(--font-mono);\n  font-size: 0.7rem;\n  font-weight: 600;\n}\n.badge-hostile {\n  background: var(--hostile-dim);\n  border: 1px solid rgba(255, 42, 59, 0.45);\n  color: #ff7582;\n  padding: 2px 7px;\n  border-radius: 3px;\n  font-family: var(--font-mono);\n  font-size: 0.7rem;\n  font-weight: 600;\n  animation: pulse-red 2s infinite ease-in-out;\n}\n.badge-radar {\n  background: var(--radar-dim);\n  border: 1px solid rgba(0, 255, 102, 0.45);\n  color: var(--radar-green);\n  padding: 2px 7px;\n  border-radius: 3px;\n  font-family: var(--font-mono);\n  font-size: 0.7rem;\n  font-weight: 600;\n}\n@keyframes pulse-red {\n  0%, 100% {\n    box-shadow: 0 0 0 rgba(255, 42, 59, 0);\n  }\n  50% {\n    box-shadow: 0 0 10px rgba(255, 42, 59, 0.4);\n  }\n}\n@keyframes pulse-gold {\n  0%, 100% {\n    opacity: 0.8;\n  }\n  50% {\n    opacity: 1;\n    filter: drop-shadow(0 0 6px var(--gold-glow));\n  }\n}\n@property --tw-rotate-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-rotate-z {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-x {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-skew-y {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-border-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-gradient-position {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-gradient-from {\n  syntax: \"<color>\";\n  inherits: false;\n  initial-value: #0000;\n}\n@property --tw-gradient-via {\n  syntax: \"<color>\";\n  inherits: false;\n  initial-value: #0000;\n}\n@property --tw-gradient-to {\n  syntax: \"<color>\";\n  inherits: false;\n  initial-value: #0000;\n}\n@property --tw-gradient-stops {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-gradient-via-stops {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-gradient-from-position {\n  syntax: \"<length-percentage>\";\n  inherits: false;\n  initial-value: 0%;\n}\n@property --tw-gradient-via-position {\n  syntax: \"<length-percentage>\";\n  inherits: false;\n  initial-value: 50%;\n}\n@property --tw-gradient-to-position {\n  syntax: \"<length-percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-leading {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-font-weight {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-tracking {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ordinal {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-slashed-zero {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-numeric-figure {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-numeric-spacing {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-numeric-fraction {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-inset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-inset-ring-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-inset-ring-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-ring-inset {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-ring-offset-width {\n  syntax: \"<length>\";\n  inherits: false;\n  initial-value: 0px;\n}\n@property --tw-ring-offset-color {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: #fff;\n}\n@property --tw-ring-offset-shadow {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: 0 0 #0000;\n}\n@property --tw-outline-style {\n  syntax: \"*\";\n  inherits: false;\n  initial-value: solid;\n}\n@property --tw-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-color {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-drop-shadow-alpha {\n  syntax: \"<percentage>\";\n  inherits: false;\n  initial-value: 100%;\n}\n@property --tw-drop-shadow-size {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-blur {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-brightness {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-contrast {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-grayscale {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-hue-rotate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-invert {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-opacity {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-saturate {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-backdrop-sepia {\n  syntax: \"*\";\n  inherits: false;\n}\n@property --tw-duration {\n  syntax: \"*\";\n  inherits: false;\n}\n@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n@keyframes pulse {\n  50% {\n    opacity: 0.5;\n  }\n}\n@layer properties {\n  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {\n    *, ::before, ::after, ::backdrop {\n      --tw-rotate-x: initial;\n      --tw-rotate-y: initial;\n      --tw-rotate-z: initial;\n      --tw-skew-x: initial;\n      --tw-skew-y: initial;\n      --tw-border-style: solid;\n      --tw-gradient-position: initial;\n      --tw-gradient-from: #0000;\n      --tw-gradient-via: #0000;\n      --tw-gradient-to: #0000;\n      --tw-gradient-stops: initial;\n      --tw-gradient-via-stops: initial;\n      --tw-gradient-from-position: 0%;\n      --tw-gradient-via-position: 50%;\n      --tw-gradient-to-position: 100%;\n      --tw-leading: initial;\n      --tw-font-weight: initial;\n      --tw-tracking: initial;\n      --tw-ordinal: initial;\n      --tw-slashed-zero: initial;\n      --tw-numeric-figure: initial;\n      --tw-numeric-spacing: initial;\n      --tw-numeric-fraction: initial;\n      --tw-shadow: 0 0 #0000;\n      --tw-shadow-color: initial;\n      --tw-shadow-alpha: 100%;\n      --tw-inset-shadow: 0 0 #0000;\n      --tw-inset-shadow-color: initial;\n      --tw-inset-shadow-alpha: 100%;\n      --tw-ring-color: initial;\n      --tw-ring-shadow: 0 0 #0000;\n      --tw-inset-ring-color: initial;\n      --tw-inset-ring-shadow: 0 0 #0000;\n      --tw-ring-inset: initial;\n      --tw-ring-offset-width: 0px;\n      --tw-ring-offset-color: #fff;\n      --tw-ring-offset-shadow: 0 0 #0000;\n      --tw-outline-style: solid;\n      --tw-blur: initial;\n      --tw-brightness: initial;\n      --tw-contrast: initial;\n      --tw-grayscale: initial;\n      --tw-hue-rotate: initial;\n      --tw-invert: initial;\n      --tw-opacity: initial;\n      --tw-saturate: initial;\n      --tw-sepia: initial;\n      --tw-drop-shadow: initial;\n      --tw-drop-shadow-color: initial;\n      --tw-drop-shadow-alpha: 100%;\n      --tw-drop-shadow-size: initial;\n      --tw-backdrop-blur: initial;\n      --tw-backdrop-brightness: initial;\n      --tw-backdrop-contrast: initial;\n      --tw-backdrop-grayscale: initial;\n      --tw-backdrop-hue-rotate: initial;\n      --tw-backdrop-invert: initial;\n      --tw-backdrop-opacity: initial;\n      --tw-backdrop-saturate: initial;\n      --tw-backdrop-sepia: initial;\n      --tw-duration: initial;\n    }\n  }\n}\n",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "FIRE INTERCEPTOR (Hard-Kill Kinetic Net)",
+          "action": "Launch pneumatic kinetic net canister rocket at target",
+          "result": "Rocket launched. Ammo before: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:07\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-84 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 3982m // ALT: 103m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3831m // ALT: 101m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 3861m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3731m // ALT: 117m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3839m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4006m // ALT: 120m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3169m // ALT: 86m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3071m // ALT: 77m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3113m // ALT: 73m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4797m // ALT: 289m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 3861 M\nALT: 105 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3861 M\nALTITUDE:\n105 M AGL\nSPEED:\n54 KM/H\nHEADING:\n315° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 133° AZ / 2° EL\nAZ:\n133°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n43%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER, after: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:07\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 LIVE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-84 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 3982m // ALT: 103m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3831m // ALT: 101m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 3861m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3731m // ALT: 117m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3839m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4006m // ALT: 120m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3169m // ALT: 86m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3071m // ALT: 77m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3113m // ALT: 73m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4797m // ALT: 289m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 3861 M\nALT: 105 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3861 M\nALTITUDE:\n105 M AGL\nSPEED:\n54 KM/H\nHEADING:\n315° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 133° AZ / 2° EL\nAZ:\n133°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n43%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "GNSS AREA SPOOFER",
+          "action": "Broadcast synchronized false ephemeris signals causing GPS drift",
+          "result": "Toggled from \"ENGAGE SPOOFER\" to \"ACTIVE SPOOF\"",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_7",
+          "button": "EXPORT DOCTRINE REPORT",
+          "action": "Generate downloadable DSSC doctrinal evaluation text dispatch",
+          "result": "Report export trigger executed successfully",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_7",
+          "button": "CLOSE REVIEW",
+          "action": "Dismiss AAR modal and return to live tactical CIC",
+          "result": "AAR modal dismissed successfully",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "consoleMsgs": [
+        {
+          "type": "debug",
+          "text": "[vite] connecting..."
+        },
+        {
+          "type": "debug",
+          "text": "[vite] connected."
+        },
+        {
+          "type": "info",
+          "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+        }
+      ]
+    },
+    "portal": {
+      "frames": [
+        {
+          "frameId": "PORTAL_GATEWAY",
+          "name": "TRISHUL Tactical Gateway & Briefing Portal",
+          "detected": true,
+          "details": {
+            "title": "TRISHUL-SIM // Tactical Gateway & Video Briefing",
+            "h1": "",
+            "links": [
+              {
+                "href": "/",
+                "text": "DIRECT ACCESS // PRIMARY COMMAND CONSOLE\nENTER TRISHUL-SIMULATION SYSTEM\nLaunch Full 3D Multi-Agent Radar, FLIR Thermal Tracking & Counter-UAS Defense Suite\nLAT 28°14'N // 71°21'E\nREADY TO DEPLOY\nLAUNCH APPLICATION"
+              }
+            ],
+            "buttons": [
+              "AUDIO MUTED (CLICK TO UNMUTE)",
+              "[ EDIT TEST LINKS ]",
+              "CANCEL",
+              "APPLY LINKS"
+            ]
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "frame": "PORTAL",
+          "button": "Link: \"DIRECT ACCESS // PRIMARY COMMAND CONSOLE\nENTER TRISHUL-SIMULATION SYSTEM\nLaunch Full 3D Multi-Agent Radar, FLIR Thermal Tracking & Counter-UAS Defense Suite\nLAT 28°14'N // 71°21'E\nREADY TO DEPLOY\nLAUNCH APPLICATION\" -> /",
+          "action": "Navigate or anchor jump",
+          "result": "Target: /",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "consoleMsgs": [
+        {
+          "type": "debug",
+          "text": "[vite] connecting..."
+        },
+        {
+          "type": "debug",
+          "text": "[vite] connected."
+        }
+      ]
+    }
+  },
+  "vercel": {
+    "app": {
+      "frames": [
+        {
+          "frameId": "FRAME_1_MISSION_BRIEFING",
+          "name": "Initial Mission Briefing Modal",
+          "detected": true,
+          "description": "Modal presents operational parameters, threat level, and 3 tactical scenarios."
+        },
+        {
+          "frameId": "FRAME_7_AAR_DEBRIEF",
+          "name": "DSSC After-Action Review (AAR) Modal",
+          "detected": true,
+          "details": {
+            "isOpen": true,
+            "grade": "GRADE: FAIL\nINCOMPLETE DRILL",
+            "score": "TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:09\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-84 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4025m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3853m // ALT: 114m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 3991m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3659m // ALT: 107m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 3962m // ALT: 102m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 3993m // ALT: 122m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3236m // ALT: 65m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3007m // ALT: 64m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3155m // ALT: 75m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4633m // ALT: 280m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 3991 M\nALT: 107 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n3991 M\nALTITUDE:\n107 M AGL\nSPEED:\n56 KM/H\nHEADING:\n301° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 136° AZ / 2° EL\nAZ:\n136°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n81%\nWEAPON 2: KINETIC NET POD\nAMMO: 7/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER\nDSSC TACTICAL AFTER-ACTION REVIEW (AAR)\nDIRECTING STAFF EVALUATION // INTERIM DEBRIEF (10 ACTIVE INBOUND)\nGRADE: FAIL\nINCOMPLETE DRILL\nCOMBAT READINESS:\n35/100\nCLASSIFICATION ACC:\n33%\nSOFT / HARD KILLS:\n0 / 0\nBASE BREACHES:\n0\nTIME-TO-DETECT\n0.5s\nEW DISCIPLINE\n0%\nAMMO EFFICIENCY\n0%\nAUTONOMOUS TACTICAL DOCTRINE INTELLIGENCE (DSSC EVALUATION ENGINE // OLLAMA LLM READY)\n**1. OPERATIONAL OVERVIEW**\nUnit conducted active air-defense during EXERCISE COASTAL SWARM (DSSC BENCHMARK). Total threat tracks neutralized: 0/10. Zero base perimeter damage sustained. Installation integrity maintained at 100%.\nCombat Readiness Score: **35/100** (Grade FAIL)\n\n**2. TACTICAL STRENGTHS**\n• Electronic warfare discipline: 0 contacts neutralized via soft-kill directional RF jamming, conserving critical kinetic point-defense ammunition.\n• Target classification accuracy measured at 33% across 3 active contacts.\n• Time-to-First-Detection: 0.5s from radar boundary crossing.\n• Ammunition efficiency: 0% hit rate on kinetic interceptor rounds.\n\n**3. DOCTRINAL DEFICIENCIES**\n• Maintained effective stand-off engagement posture throughout exercise.\n• Optimal ammo conservation achieved — kinetic reserves maintained.\n• Classification accuracy below doctrinal threshold (80%). Review sensor fusion training protocol.\n\n**4. DSSC DIRECTING STAFF DIRECTIVES**\nPrioritize RF spectrum engagement at maximum stand-off range (>2500m). Deploy kinetic nets strictly against hardened loitering munitions or fast FPV terminal dives. Operator requires remedial C-UAS engagement training before qualification.\nEXPORT DOCTRINE REPORT\nCLOSE REVIEW\nRESTART SCENARIO"
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #1 (EXERCISE DESERT SHIELD)",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE DESERT SHIELD\nENV: CLEAR\nFLIR MODE: DAYTIME (OPTICAL)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #2 (EXERCISE MOUNTAIN SENTINEL)",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE MOUNTAIN SENTINEL\nENV: FOG\nFLIR MODE: NIGHT (BHOT/WHOT)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "Scenario Card #3 (EXERCISE COASTAL SWARM (DSSC BENCHMARK))",
+          "action": "Click scenario card to switch active mission doctrine",
+          "result": "Switched active scenario to: ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE COASTAL SWARM (DSSC BENCHMARK)\nENV: CLEAR\nFLIR MODE: DAYTIME (OPTICAL)",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_1",
+          "button": "COMMENCE TACTICAL DRILL",
+          "action": "Close modal and initialize 60Hz physics clock loop",
+          "result": "Modal closed, main tactical CIC HUD visible",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: RADAR",
+          "action": "Switch layout to RADAR mode",
+          "result": "Layout state: hasRadar=true, hasFlir=false",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: FLIR",
+          "action": "Switch layout to FLIR mode",
+          "result": "Layout state: hasRadar=false, hasFlir=true",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "View Toggle: SPLIT",
+          "action": "Switch layout to SPLIT mode",
+          "result": "Layout state: hasRadar=true, hasFlir=true",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "Audio Mute/Unmute Toggle",
+          "action": "Toggle synthetic tactical sound cues",
+          "result": "Toggled from \"Mute Audio\" to \"Enable Audio\"",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_2",
+          "button": "Reset Simulation",
+          "action": "Purge current engagement metrics and reseed scenario boids",
+          "result": "Reset executed successfully",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #1 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1001\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #2 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1002\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_3",
+          "button": "Contact Roster Item #3 (UNVERIFIED)",
+          "action": "Select target to lock telemetry into Target Card and FLIR",
+          "result": "Track Card locked to: TRACK: TRK-1003\nLOCK: AUTO-CORR",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: WHOT",
+          "action": "Switch thermal infrared shader palette to WHOT",
+          "result": "Activated WHOT shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: BHOT",
+          "action": "Switch thermal infrared shader palette to BHOT",
+          "result": "Activated BHOT shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: IRONBOW",
+          "action": "Switch thermal infrared shader palette to IRONBOW",
+          "result": "Activated IRONBOW shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Thermal Mode: NVG",
+          "action": "Switch thermal infrared shader palette to NVG",
+          "result": "Activated NVG shader mode",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 1X",
+          "action": "Adjust MWIR optical zoom level to 1X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4142m // ALT: 114m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3969m // ALT: 117m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 4107m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3776m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4078m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4110m // ALT: 126m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3534m // ALT: 71m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3313m // ALT: 70m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3447m // ALT: 82m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4845m // ALT: 293m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 35.0° // 1X OPTICAL\nLRF: 4107 M\nALT: 110 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4107 M\nALTITUDE:\n110 M AGL\nSPEED:\n52 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 4X",
+          "action": "Adjust MWIR optical zoom level to 4X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4139m // ALT: 114m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3966m // ALT: 117m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 4104m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3773m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4075m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4107m // ALT: 126m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3526m // ALT: 71m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3306m // ALT: 70m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3440m // ALT: 82m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4840m // ALT: 293m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 8.8° // 4X OPTICAL\nLRF: 4104 M\nALT: 110 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4104 M\nALTITUDE:\n110 M AGL\nSPEED:\n53 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_4",
+          "button": "FLIR Optical Zoom: 12X",
+          "action": "Adjust MWIR optical zoom level to 12X",
+          "result": "FOV read: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:02\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-79 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4136m // ALT: 114m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3963m // ALT: 117m\nINGRESS\nUNVERIFIED\nTRK-1003\nRNG: 4101m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3770m // ALT: 110m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4072m // ALT: 105m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4104m // ALT: 126m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3519m // ALT: 70m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3298m // ALT: 70m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3433m // ALT: 82m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4836m // ALT: 292m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 4101 M\nALT: 110 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4101 M\nALTITUDE:\n110 M AGL\nSPEED:\n54 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 0° AZ / 15° EL\nAZ:\n0°\nEL:\n15°\nSNAP TO TARGET (3D BEAM)\nEMIT RF JAMMER\nLOCK DWELL:\n0%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: QUADCOPTER",
+          "action": "Submit trainee classification hypothesis as QUADCOPTER",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: FPV KAMIKAZE",
+          "action": "Submit trainee classification hypothesis as FPV KAMIKAZE",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Classification: FIXED WING",
+          "action": "Submit trainee classification hypothesis as FIXED WING",
+          "result": "Evaluated classification outcome: CORRECT",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: ALPHA",
+          "action": "Set target engagement priority level to ALPHA",
+          "result": "Priority ALPHA set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: BRAVO",
+          "action": "Set target engagement priority level to BRAVO",
+          "result": "Priority BRAVO set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_5",
+          "button": "Tactical Priority: CHARLIE",
+          "action": "Set target engagement priority level to CHARLIE",
+          "result": "Priority CHARLIE set",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "SNAP TO TARGET (RF Jammer)",
+          "action": "Automatically calculate target azimuth and steer jammer beam",
+          "result": "Azimuth snapped from 0° to 0°",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "EMIT RF JAMMER (Soft-Kill)",
+          "action": "Transmit directional 15° EW jamming cone at target bearing",
+          "result": "Toggled from \"EMIT RF JAMMER\" to \"TRANSMITTING BEAM\", dwell lock: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:06\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4073m // ALT: 112m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3901m // ALT: 115m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 4038m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3707m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4009m // ALT: 103m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4041m // ALT: 124m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3357m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3132m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3274m // ALT: 78m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4730m // ALT: 286m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 4038 M\nALT: 108 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4038 M\nALTITUDE:\n108 M AGL\nSPEED:\n58 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 136° AZ / 2° EL\nAZ:\n136°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n39%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "FIRE INTERCEPTOR (Hard-Kill Kinetic Net)",
+          "action": "Launch pneumatic kinetic net canister rocket at target",
+          "result": "Rocket launched. Ammo before: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:06\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4073m // ALT: 112m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3900m // ALT: 115m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 4038m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3707m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4009m // ALT: 103m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4041m // ALT: 124m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3356m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3131m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3274m // ALT: 78m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4730m // ALT: 286m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 4038 M\nALT: 108 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4038 M\nALTITUDE:\n108 M AGL\nSPEED:\n58 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 136° AZ / 2° EL\nAZ:\n136°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n39%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER, after: TRISHUL-SIM // C-UAS\n|\nDSSC OPERATIONAL TRAINER // SIH26247\nDEFCON 1 (MAXIMUM ALERT)\nOPERATION:\nEXERCISE COASTAL SWARM (DSSC BENCHMARK)\n|\n10 INGRESSING\n00:06\nSPLIT\nRADAR\nFLIR\nSCENARIO\nDEBRIEF\nVIDEO PORTAL\nINTEGRATED SENSOR SUITE\nMAVLINK v2.0 STANDALONE\nONLINE\nPRIMARY 3D AESA RADAR\nSweep Mode:\n360° PPI // 30 RPM\nTarget Tracks:\n10 ACTIVE\nClutter Filter:\nNORMAL\nRF SPECTRUM WATERFALL\nDF BEARING LOCK\n2.4 GHz ISM (C2 Link):\n-78 dBm\n5.8 GHz VTX (FPV Feed):\n-85 dBm\n868/915 MHz (LoRa C2):\n-72 dBm\nACOUSTIC ARRAY\nMULTI-BEAM FFT\n5.2 kHz (QUAD)\n7.8 kHz (FPV)\n3.4 kHz (WING)\nACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD\nCONTACT ROSTER (10)\n10 AIRBORNE\nUNVERIFIED\nTRK-1001\nRNG: 4073m // ALT: 112m\nINGRESS\nUNVERIFIED\nTRK-1002\nRNG: 3900m // ALT: 115m\nINGRESS\nUAV-QUAD\nTRK-1003\nRNG: 4038m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1004\nRNG: 3707m // ALT: 108m\nINGRESS\nUNVERIFIED\nTRK-1005\nRNG: 4009m // ALT: 103m\nINGRESS\nUNVERIFIED\nTRK-1006\nRNG: 4041m // ALT: 124m\nINGRESS\nUNVERIFIED\nTRK-1007\nRNG: 3356m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1008\nRNG: 3131m // ALT: 67m\nINGRESS\nUNVERIFIED\nTRK-1009\nRNG: 3274m // ALT: 78m\nINGRESS\nUNVERIFIED\nTRK-1010\nRNG: 4730m // ALT: 286m\nINGRESS\n3D AIR DEFENSE RADAR // 5,000M ENVELOPE\nROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE\nALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL\nDRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK\nOPTICAL FLIR // THERMAL TRACKER\nWHOT\nBHOT\nIRONBOW\nNVG\nFOV: 2.9° // 12X OPTICAL\nLRF: 4038 M\nALT: 108 M AGL\nTRACK: TRK-1003\nLOCK: AUTO-CORR\nSENSOR: MWIR 640x512 COOLED\n1X\n4X\n12X\nTRACK: TRK-1003\nINGRESS\nSLANT RANGE:\n4038 M\nALTITUDE:\n108 M AGL\nSPEED:\n58 KM/H\nHEADING:\n316° MAG\nRADAR RCS:\n-20 dBsm\nRF CONTROL:\n2.4 GHz FHSS\nDSSC CLASSIFICATION TEST\nINCORRECT\nQUADCOPTER\nFPV KAMIKAZE\nFIXED WING\nTACTICAL PRIORITY:\nALPHA\nBRAVO\nCHARLIE\nWEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE)\nBEAM: 136° AZ / 2° EL\nAZ:\n136°\nEL:\n2°\nSNAP TO TARGET (3D BEAM)\nTRANSMITTING BEAM\nLOCK DWELL:\n39%\nWEAPON 2: KINETIC NET POD\nAMMO: 8/8\nFIRE INTERCEPTOR\nGNSS AREA SPOOFER\nSTANDBY\nAREA DRIFT DISPERSION:\nENGAGE SPOOFER",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_6",
+          "button": "GNSS AREA SPOOFER",
+          "action": "Broadcast synchronized false ephemeris signals causing GPS drift",
+          "result": "Toggled from \"ENGAGE SPOOFER\" to \"ACTIVE SPOOF\"",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_7",
+          "button": "EXPORT DOCTRINE REPORT",
+          "action": "Generate downloadable DSSC doctrinal evaluation text dispatch",
+          "result": "Report export trigger executed successfully",
+          "status": "PASS"
+        },
+        {
+          "frame": "FRAME_7",
+          "button": "CLOSE REVIEW",
+          "action": "Dismiss AAR modal and return to live tactical CIC",
+          "result": "AAR modal dismissed successfully",
+          "status": "PASS"
+        }
+      ],
+      "errors": [
+        {
+          "type": "CONSOLE_ERROR",
+          "text": "Access to fetch at 'http://localhost:8000/api/mavlink/sample_packets' from origin 'https://trishul-sim.vercel.app' has been blocked by CORS policy: Permission was denied for this request to access the `loopback` address space."
+        },
+        {
+          "type": "CONSOLE_ERROR",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        }
+      ],
+      "consoleMsgs": [
+        {
+          "type": "error",
+          "text": "Access to fetch at 'http://localhost:8000/api/mavlink/sample_packets' from origin 'https://trishul-sim.vercel.app' has been blocked by CORS policy: Permission was denied for this request to access the `loopback` address space."
+        },
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_FAILED"
+        }
+      ]
+    },
+    "portal": {
+      "frames": [
+        {
+          "frameId": "PORTAL_GATEWAY",
+          "name": "TRISHUL Tactical Gateway & Briefing Portal",
+          "detected": true,
+          "details": {
+            "title": "TRISHUL-SIM // Tactical Gateway & Video Briefing",
+            "h1": "",
+            "links": [
+              {
+                "href": "/",
+                "text": "DIRECT ACCESS // PRIMARY COMMAND CONSOLE\nENTER TRISHUL-SIMULATION SYSTEM\nLaunch Full 3D Multi-Agent Radar, FLIR Thermal Tracking & Counter-UAS Defense Suite\nLAT 28°14'N // 71°21'E\nREADY TO DEPLOY\nLAUNCH APPLICATION"
+              }
+            ],
+            "buttons": [
+              "AUDIO MUTED (CLICK TO UNMUTE)",
+              "[ EDIT TEST LINKS ]",
+              "CANCEL",
+              "APPLY LINKS"
+            ]
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "frame": "PORTAL",
+          "button": "Link: \"DIRECT ACCESS // PRIMARY COMMAND CONSOLE\nENTER TRISHUL-SIMULATION SYSTEM\nLaunch Full 3D Multi-Agent Radar, FLIR Thermal Tracking & Counter-UAS Defense Suite\nLAT 28°14'N // 71°21'E\nREADY TO DEPLOY\nLAUNCH APPLICATION\" -> /",
+          "action": "Navigate or anchor jump",
+          "result": "Target: /",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "consoleMsgs": []
+    }
+  }
+}

@@ -1,0 +1,613 @@
+{
+  "timestamp": "2026-10-26T03:41:16.788Z",
+  "localhost": {
+    "frames": [
+      {
+        "frameId": "FRAME_1",
+        "name": "Mission Briefing Modal & Doctrine Selector",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_01_mission_briefing_modal.png",
+        "judgeQuestions": [
+          "Q1.1: Does clicking Scenario Cards update the active doctrine details preview WITHOUT prematurely unmounting the modal?",
+          "Q1.2: Does the prominent gold [COMMENCE TACTICAL DRILL] button execute properly as the confirmed launch trigger?",
+          "Q1.3: Is there a clean close action (X / ESC) allowing an operator to dismiss without resetting?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Scenario Card [EXERCISE DESERT SHIELD]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=true, ActivePreview=\"ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE DESERT SHIELD ENV: CLEAR FLIR MODE: DAYTIME (OPTICAL)\"",
+            "status": "PASS"
+          },
+          {
+            "button": "Scenario Card [EXERCISE MOUNTAIN SENTINEL]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=true, ActivePreview=\"ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE MOUNTAIN SENTINEL ENV: FOG FLIR MODE: NIGHT (BHOT/WHOT)\"",
+            "status": "PASS"
+          },
+          {
+            "button": "Scenario Card [EXERCISE COASTAL SWARM]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=true, ActivePreview=\"ACTIVE SCENARIO // MISSION DOCTRINE: EXERCISE COASTAL SWARM (DSSC BENCHMARK) ENV: CLEAR FLIR MODE: DAYTIME (OPTICAL)\"",
+            "status": "PASS"
+          },
+          {
+            "button": "COMMENCE TACTICAL DRILL",
+            "expected": "Commit scenario, start 60Hz physics clock, dismiss modal",
+            "actual": "Modal dismissed cleanly, main CIC HUD active",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_2",
+        "name": "Top Tactical Command Navigation Bar",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_02_top_command_bar.png",
+        "judgeQuestions": [
+          "Q2.1: Does Audio Toggle visually switch icon and state without unhandled AudioContext errors?",
+          "Q2.2: Do RADAR, FLIR, and SPLIT toggles cleanly reflow grid panels without canvas stretching?",
+          "Q2.3: Does the SCENARIO button re-open the briefing modal on-demand without crashing the loop?",
+          "Q2.4: Does the RESET button purge boid positions and reset timer to 00:00?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "View Mode [RADAR]",
+            "expected": "Expand to RADAR focus layout",
+            "actual": "Radar=true, FLIR=false",
+            "status": "PASS"
+          },
+          {
+            "button": "View Mode [FLIR]",
+            "expected": "Expand to FLIR focus layout",
+            "actual": "Radar=false, FLIR=true",
+            "status": "PASS"
+          },
+          {
+            "button": "View Mode [SPLIT]",
+            "expected": "Expand to SPLIT focus layout",
+            "actual": "Radar=true, FLIR=true",
+            "status": "PASS"
+          },
+          {
+            "button": "Audio Mute/Unmute Toggle",
+            "expected": "Toggle sound icon and title state",
+            "actual": "Before=\"Mute Audio\", After=\"Enable Audio\"",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_3",
+        "name": "3D AESA Radar Scope & Autonomous Swarm",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_03_radar_3d_viewport.png",
+        "judgeQuestions": [
+          "Q3.1: Are elevation stalks and WGS-84 altitude drop-lines visible from each airborne drone to the ground plane?",
+          "Q3.2: Does the 30 RPM rotating phosphor sweep render smoothly in WebGL?",
+          "Q3.3: Does direct clicking or raycasting on a 3D blip lock telemetry into the target card?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "3D Radar WebGL Canvas & Orbit Controls",
+            "expected": "WebGL context initialized with 60 FPS Three.js scene",
+            "actual": "WebGL Canvas active and rendering",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_4",
+        "name": "Contact Roster & Target Acquisition",
+        "judgeQuestions": [
+          "Q4.1: Does selecting a contact from the roster highlight the card in tactical green (#00ff66)?",
+          "Q4.2: Does the Target Card immediately lock onto the selected drone ID and display live slant range and altitude?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Contact Item [UNVERIFIED]",
+            "expected": "Select drone UNVERIFIED and update track card",
+            "actual": "Track card reads: \"TRACK: TRK-1001 LOCK: AUTO-CORR\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Contact Item [UNVERIFIED]",
+            "expected": "Select drone UNVERIFIED and update track card",
+            "actual": "Track card reads: \"TRACK: TRK-1002 LOCK: AUTO-CORR\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Contact Item [UNVERIFIED]",
+            "expected": "Select drone UNVERIFIED and update track card",
+            "actual": "Track card reads: \"TRACK: TRK-1003 LOCK: AUTO-CORR\"",
+            "status": "FAIL"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_5",
+        "name": "FLIR Thermal Camera & Dynamic Airframe Silhouettes",
+        "judgeQuestions": [
+          "Q5.1: Do WHOT, BHOT, IRONBOW, and NVG modes switch canvas palette immediately?",
+          "Q5.2: Do 1X, 4X, and 12X optical zoom buttons scale FOV and target size?",
+          "Q5.3: Does the procedural silhouette render distinct military geometries per threat type (Swept Delta Wing vs FPV X-frame vs Quadcopter)?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "FLIR Mode [WHOT]",
+            "expected": "Activate WHOT thermal shader palette",
+            "actual": "Activated WHOT (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [BHOT]",
+            "expected": "Activate BHOT thermal shader palette",
+            "actual": "Activated BHOT (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [IRONBOW]",
+            "expected": "Activate IRONBOW thermal shader palette",
+            "actual": "Activated IRONBOW (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [NVG]",
+            "expected": "Activate NVG thermal shader palette",
+            "actual": "Activated NVG (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [1X]",
+            "expected": "Set optical magnification to 1X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [4X]",
+            "expected": "Set optical magnification to 4X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [12X]",
+            "expected": "Set optical magnification to 12X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          }
+        ],
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_05_flir_thermal_ironbow.png"
+      },
+      {
+        "frameId": "FRAME_6",
+        "name": "Target Track Telemetry & Classification Test",
+        "judgeQuestions": [
+          "Q6.1: Does clicking QUADCOPTER, FPV KAMIKAZE, or FIXED WING evaluate trainee decision against ground truth?",
+          "Q6.2: Does CORRECT or INCORRECT badge render dynamically?",
+          "Q6.3: Do ALPHA, BRAVO, CHARLIE priority buttons highlight with respective tactical colors?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Classification [QUADCOPTER]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Classification [FPV KAMIKAZE]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Classification [FIXED WING]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [ALPHA]",
+            "expected": "Assign priority ALPHA",
+            "actual": "Priority ALPHA set",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [BRAVO]",
+            "expected": "Assign priority BRAVO",
+            "actual": "Priority BRAVO set",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [CHARLIE]",
+            "expected": "Assign priority CHARLIE",
+            "actual": "Priority CHARLIE set",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_7",
+        "name": "Countermeasure Weapons Console (3D Beam & Ballistics)",
+        "judgeQuestions": [
+          "Q7.1: Does SNAP 3D BEAM calculate and steer BOTH Azimuth AND Elevation angles to target?",
+          "Q7.2: Does EMIT RF JAMMER begin 2.5s dwell lock and trigger RTH retreat upon 100%?",
+          "Q7.3: Does FIRE INTERCEPTOR decrement ammo (8/8 -> 7/8) and launch a parabolic rocket trajectory?",
+          "Q7.4: Does GNSS AREA SPOOFER toggle active status and area scatter?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "SNAP 3D BEAM",
+            "expected": "Calculate and set Azimuth and Elevation directly to target vector",
+            "actual": "Azimuth: 0° -> 0°, Elevation: 15° -> 15°",
+            "status": "FAIL"
+          },
+          {
+            "button": "EMIT RF JAMMER (Soft-Kill)",
+            "expected": "Transmit directional 3D beam, build dwell lock, trigger JAMMED_RTH",
+            "actual": "Button: \"EMIT RF JAMMER\" -> \"TRANSMITTING BEAM\", Dwell lock: 0%",
+            "status": "PASS"
+          },
+          {
+            "button": "FIRE INTERCEPTOR (Kinetic Net Pod)",
+            "expected": "Launch parabolic rocket, decrement ammo from 8 to 7, neutralize threat",
+            "actual": "Rocket fired. Ammo: AMMO: 8/8 -> AMMO: 7/8",
+            "status": "PASS"
+          },
+          {
+            "button": "GNSS AREA SPOOFER",
+            "expected": "Toggle active area coordinate drift injection",
+            "actual": "State toggled: \"ENGAGE SPOOFER\" -> \"ACTIVE SPOOF\"",
+            "status": "PASS"
+          }
+        ],
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_07_weapons_console_engagement.png"
+      },
+      {
+        "frameId": "FRAME_8",
+        "name": "DSSC Tactical After-Action Review (AAR) Modal",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_08_aar_debrief_modal.png",
+        "judgeQuestions": [
+          "Q8.1: Does the military letter grade and combat readiness score reflect engagement metrics accurately?",
+          "Q8.2: Does the tactical evaluation intelligence provide structured military feedback (Operational Overview, Strengths, Deficiencies, Directives)?",
+          "Q8.3: Does EXPORT DOCTRINE REPORT trigger a formatted text download?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "DEBRIEF Button & Score Computation",
+            "expected": "Open AAR modal, display letter grade and readiness score",
+            "actual": "Modal Open=true, Grade=GRADE: FAIL, Score=TRISHUL-SIM // C-UAS | DSSC OPERATIONAL TRAINER // SIH26247 DEFCON 1 (MAXIMUM ALERT) OPERATION: EXERCISE COASTAL SWARM (DSSC BENCHMARK) | 10 INGRESSING 00:16 SPLIT RADAR FLIR SCENARIO DEBRIEF VIDEO PORTAL INTEGRATED SENSOR SUITE ONLINE PRIMARY 3D AESA RADAR Sweep Mode: 360° PPI // 30 RPM Target Tracks: 10 ACTIVE Clutter Filter: NORMAL RF SPECTRUM WATERFALL DF BEARING LOCK 2.4 GHz ISM (C2 Link): -82 dBm 5.8 GHz VTX (FPV Feed): -66 dBm 868/915 MHz (LoRa C2): -92 dBm ACOUSTIC ARRAY MULTI-BEAM FFT 5.2 kHz (QUAD) 7.8 kHz (FPV) 3.4 kHz (WING) ALERT: HIGH-RPM BRUSHLESS SIGNATURE // PROBABLE FPV DIVE CONTACT ROSTER (10) 10 AIRBORNE UNVERIFIED TRK-1001 RNG: 3938m // ALT: 95m INGRESS UNVERIFIED TRK-1002 RNG: 3867m // ALT: 125m INGRESS UAV-QUAD TRK-1003 RNG: 3747m // ALT: 117m INGRESS UNVERIFIED TRK-1004 RNG: 3814m // ALT: 108m INGRESS UNVERIFIED TRK-1005 RNG: 3735m // ALT: 126m INGRESS UNVERIFIED TRK-1006 RNG: 3844m // ALT: 100m INGRESS UNVERIFIED TRK-1007 RNG: 2842m // ALT: 71m INGRESS UNVERIFIED TRK-1008 RNG: 2671m // ALT: 60m INGRESS UNVERIFIED TRK-1009 RNG: 2997m // ALT: 58m INGRESS UNVERIFIED TRK-1010 RNG: 4377m // ALT: 254m INGRESS 3D AIR DEFENSE RADAR // 5,000M ENVELOPE ROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE ALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL DRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK OPTICAL FLIR // THERMAL TRACKER WHOT BHOT IRONBOW NVG FOV: 2.9° // 12X OPTICAL LRF: 3747 M ALT: 117 M AGL TRACK: TRK-1003 LOCK: AUTO-CORR SENSOR: MWIR 640x512 COOLED 1X 4X 12X TRACK: TRK-1003 INGRESS SLANT RANGE: 3747 M ALTITUDE: 117 M AGL SPEED: 55 KM/H HEADING: 336° MAG RADAR RCS: -20 dBsm RF CONTROL: 2.4 GHz FHSS DSSC CLASSIFICATION TEST INCORRECT QUADCOPTER FPV KAMIKAZE FIXED WING TACTICAL PRIORITY: ALPHA BRAVO CHARLIE WEAPON 1: DIRECTIONAL RF JAMMER (3D BEAM // 15° CONE) BEAM: 0° AZ / 15° EL AZ: 0° EL: 15° SNAP TO TARGET (3D BEAM) TRANSMITTING BEAM LOCK DWELL: 0% WEAPON 2: KINETIC NET POD AMMO: 7/8 FIRE INTERCEPTOR GNSS AREA SPOOFER STANDBY AREA DRIFT DISPERSION: ENGAGE SPOOFER DSSC TACTICAL AFTER-ACTION REVIEW (AAR) DIRECTING STAFF EVALUATION // EXERCISE COMPLETED GRADE: FAIL COMBAT READINESS: 35/100 CLASSIFICATION ACC: 33% SOFT / HARD KILLS: 0 / 0 BASE BREACHES: 0 TIME-TO-DETECT 6.5s EW DISCIPLINE 0% AMMO EFFICIENCY 0% AUTONOMOUS TACTICAL DOCTRINE INTELLIGENCE (DSSC EVALUATION ENGINE // OLLAMA LLM READY) **1. OPERATIONAL OVERVIEW** Unit conducted active air-defense during EXERCISE COASTAL SWARM (DSSC BENCHMARK). Total threat tracks neutralized: 0/10. Zero base perimeter damage sustained. Installation integrity maintained at 100%. Combat Readiness Score: **35/100** (Grade FAIL)  **2. TACTICAL STRENGTHS** • Electronic warfare discipline: 0 contacts neutralized via soft-kill directional RF jamming, conserving critical kinetic point-defense ammunition. • Target classification accuracy measured at 33% across 3 active contacts. • Time-to-First-Detection: 6.5s from radar boundary crossing. • Ammunition efficiency: 0% hit rate on kinetic interceptor rounds.  **3. DOCTRINAL DEFICIENCIES** • Maintained effective stand-off engagement posture throughout exercise. • Optimal ammo conservation achieved — kinetic reserves maintained. • Classification accuracy below doctrinal threshold (80%). Review sensor fusion training protocol.  **4. DSSC DIRECTING STAFF DIRECTIVES** Prioritize RF spectrum engagement at maximum stand-off range (>2500m). Deploy kinetic nets strictly against hardened loitering munitions or fast FPV terminal dives. Operator requires remedial C-UAS engagement training before qualification. EXPORT DOCTRINE REPORT CLOSE REVIEW RESTART SCENARIO",
+            "status": "PASS"
+          },
+          {
+            "button": "EXPORT DOCTRINE REPORT",
+            "expected": "Generate and trigger DSSC_TRISHUL_AAR_DEBRIEF text download",
+            "actual": "Export trigger executed successfully",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_9",
+        "name": "Tactical Video Briefing & Architecture Portal",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/localhost_09_tactical_portal.png",
+        "judgeQuestions": [
+          "Q9.1: Does portal load with zero 404 assets or broken routes?",
+          "Q9.2: Does the CTA button navigate seamlessly back to the simulator?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Portal CTA [LAUNCH SIMULATOR]",
+            "expected": "Navigate back to main simulator",
+            "actual": "Portal Title=\"TRISHUL-SIM // Tactical Gateway & Video Briefing\", Links=1, HasBackLink=true",
+            "status": "PASS"
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "totalButtonsTested": 32,
+    "passedButtons": 28
+  },
+  "vercel": {
+    "frames": [
+      {
+        "frameId": "FRAME_1",
+        "name": "Mission Briefing Modal & Doctrine Selector",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_01_mission_briefing_modal.png",
+        "judgeQuestions": [
+          "Q1.1: Does clicking Scenario Cards update the active doctrine details preview WITHOUT prematurely unmounting the modal?",
+          "Q1.2: Does the prominent gold [COMMENCE TACTICAL DRILL] button execute properly as the confirmed launch trigger?",
+          "Q1.3: Is there a clean close action (X / ESC) allowing an operator to dismiss without resetting?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Scenario Card [EXERCISE DESERT SHIELD]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=false, ActivePreview=\"\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Scenario Card [EXERCISE MOUNTAIN SENTINEL]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=false, ActivePreview=\"\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Scenario Card [EXERCISE COASTAL SWARM]",
+            "expected": "Highlight card, update doctrine preview, keep modal open",
+            "actual": "ModalOpen=false, ActivePreview=\"\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "COMMENCE TACTICAL DRILL",
+            "expected": "Commit scenario, start 60Hz physics clock, dismiss modal",
+            "actual": "Modal dismissed cleanly, main CIC HUD active",
+            "status": "FAIL"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_2",
+        "name": "Top Tactical Command Navigation Bar",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_02_top_command_bar.png",
+        "judgeQuestions": [
+          "Q2.1: Does Audio Toggle visually switch icon and state without unhandled AudioContext errors?",
+          "Q2.2: Do RADAR, FLIR, and SPLIT toggles cleanly reflow grid panels without canvas stretching?",
+          "Q2.3: Does the SCENARIO button re-open the briefing modal on-demand without crashing the loop?",
+          "Q2.4: Does the RESET button purge boid positions and reset timer to 00:00?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "View Mode [RADAR]",
+            "expected": "Expand to RADAR focus layout",
+            "actual": "Radar=true, FLIR=false",
+            "status": "PASS"
+          },
+          {
+            "button": "View Mode [FLIR]",
+            "expected": "Expand to FLIR focus layout",
+            "actual": "Radar=false, FLIR=true",
+            "status": "PASS"
+          },
+          {
+            "button": "View Mode [SPLIT]",
+            "expected": "Expand to SPLIT focus layout",
+            "actual": "Radar=true, FLIR=true",
+            "status": "PASS"
+          },
+          {
+            "button": "Audio Mute/Unmute Toggle",
+            "expected": "Toggle sound icon and title state",
+            "actual": "Before=\"Mute Audio\", After=\"Enable Audio\"",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_3",
+        "name": "3D AESA Radar Scope & Autonomous Swarm",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_03_radar_3d_viewport.png",
+        "judgeQuestions": [
+          "Q3.1: Are elevation stalks and WGS-84 altitude drop-lines visible from each airborne drone to the ground plane?",
+          "Q3.2: Does the 30 RPM rotating phosphor sweep render smoothly in WebGL?",
+          "Q3.3: Does direct clicking or raycasting on a 3D blip lock telemetry into the target card?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "3D Radar WebGL Canvas & Orbit Controls",
+            "expected": "WebGL context initialized with 60 FPS Three.js scene",
+            "actual": "WebGL Canvas active and rendering",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_4",
+        "name": "Contact Roster & Target Acquisition",
+        "judgeQuestions": [
+          "Q4.1: Does selecting a contact from the roster highlight the card in tactical green (#00ff66)?",
+          "Q4.2: Does the Target Card immediately lock onto the selected drone ID and display live slant range and altitude?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Contact Item [UAV-WING]",
+            "expected": "Select drone UAV-WING and update track card",
+            "actual": "Track card reads: \"TRACK: UAV-LOIT-01 LOCK: AUTO-CORR\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Contact Item [UAV-WING]",
+            "expected": "Select drone UAV-WING and update track card",
+            "actual": "Track card reads: \"TRACK: UAV-LOIT-02 LOCK: AUTO-CORR\"",
+            "status": "FAIL"
+          },
+          {
+            "button": "Contact Item [UAV-QUAD]",
+            "expected": "Select drone UAV-QUAD and update track card",
+            "actual": "Track card reads: \"TRACK: UAV-QUAD-03 LOCK: AUTO-CORR\"",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_5",
+        "name": "FLIR Thermal Camera & Dynamic Airframe Silhouettes",
+        "judgeQuestions": [
+          "Q5.1: Do WHOT, BHOT, IRONBOW, and NVG modes switch canvas palette immediately?",
+          "Q5.2: Do 1X, 4X, and 12X optical zoom buttons scale FOV and target size?",
+          "Q5.3: Does the procedural silhouette render distinct military geometries per threat type (Swept Delta Wing vs FPV X-frame vs Quadcopter)?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "FLIR Mode [WHOT]",
+            "expected": "Activate WHOT thermal shader palette",
+            "actual": "Activated WHOT (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [BHOT]",
+            "expected": "Activate BHOT thermal shader palette",
+            "actual": "Activated BHOT (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [IRONBOW]",
+            "expected": "Activate IRONBOW thermal shader palette",
+            "actual": "Activated IRONBOW (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Mode [NVG]",
+            "expected": "Activate NVG thermal shader palette",
+            "actual": "Activated NVG (active class applied)",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [1X]",
+            "expected": "Set optical magnification to 1X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [4X]",
+            "expected": "Set optical magnification to 4X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          },
+          {
+            "button": "FLIR Zoom [12X]",
+            "expected": "Set optical magnification to 12X",
+            "actual": "OSD Readout: \"TRISHUL-SIM // C-UAS\"",
+            "status": "PASS"
+          }
+        ],
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_05_flir_thermal_ironbow.png"
+      },
+      {
+        "frameId": "FRAME_6",
+        "name": "Target Track Telemetry & Classification Test",
+        "judgeQuestions": [
+          "Q6.1: Does clicking QUADCOPTER, FPV KAMIKAZE, or FIXED WING evaluate trainee decision against ground truth?",
+          "Q6.2: Does CORRECT or INCORRECT badge render dynamically?",
+          "Q6.3: Do ALPHA, BRAVO, CHARLIE priority buttons highlight with respective tactical colors?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Classification [QUADCOPTER]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Classification [FPV KAMIKAZE]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Classification [FIXED WING]",
+            "expected": "Evaluate classification and display feedback badge",
+            "actual": "Result: CORRECT",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [ALPHA]",
+            "expected": "Assign priority ALPHA",
+            "actual": "Priority ALPHA set",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [BRAVO]",
+            "expected": "Assign priority BRAVO",
+            "actual": "Priority BRAVO set",
+            "status": "PASS"
+          },
+          {
+            "button": "Tactical Priority [CHARLIE]",
+            "expected": "Assign priority CHARLIE",
+            "actual": "Priority CHARLIE set",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_7",
+        "name": "Countermeasure Weapons Console (3D Beam & Ballistics)",
+        "judgeQuestions": [
+          "Q7.1: Does SNAP 3D BEAM calculate and steer BOTH Azimuth AND Elevation angles to target?",
+          "Q7.2: Does EMIT RF JAMMER begin 2.5s dwell lock and trigger RTH retreat upon 100%?",
+          "Q7.3: Does FIRE INTERCEPTOR decrement ammo (8/8 -> 7/8) and launch a parabolic rocket trajectory?",
+          "Q7.4: Does GNSS AREA SPOOFER toggle active status and area scatter?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "SNAP 3D BEAM",
+            "expected": "Calculate and set Azimuth and Elevation directly to target vector",
+            "actual": "Azimuth: 0° -> 0°, Elevation: undefined° -> undefined°",
+            "status": "FAIL"
+          },
+          {
+            "button": "EMIT RF JAMMER (Soft-Kill)",
+            "expected": "Transmit directional 3D beam, build dwell lock, trigger JAMMED_RTH",
+            "actual": "Button: \"EMIT RF JAMMER\" -> \"TRANSMITTING BEAM\", Dwell lock: 0%",
+            "status": "PASS"
+          },
+          {
+            "button": "FIRE INTERCEPTOR (Kinetic Net Pod)",
+            "expected": "Launch parabolic rocket, decrement ammo from 8 to 7, neutralize threat",
+            "actual": "Rocket fired. Ammo: AMMO: 8/8 -> AMMO: 7/8",
+            "status": "PASS"
+          },
+          {
+            "button": "GNSS AREA SPOOFER",
+            "expected": "Toggle active area coordinate drift injection",
+            "actual": "State toggled: \"ENGAGE SPOOFER\" -> \"ACTIVE SPOOF\"",
+            "status": "PASS"
+          }
+        ],
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_07_weapons_console_engagement.png"
+      },
+      {
+        "frameId": "FRAME_8",
+        "name": "DSSC Tactical After-Action Review (AAR) Modal",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_08_aar_debrief_modal.png",
+        "judgeQuestions": [
+          "Q8.1: Does the military letter grade and combat readiness score reflect engagement metrics accurately?",
+          "Q8.2: Does the tactical evaluation intelligence provide structured military feedback (Operational Overview, Strengths, Deficiencies, Directives)?",
+          "Q8.3: Does EXPORT DOCTRINE REPORT trigger a formatted text download?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "DEBRIEF Button & Score Computation",
+            "expected": "Open AAR modal, display letter grade and readiness score",
+            "actual": "Modal Open=true, Grade=GRADE: FAIL, Score=TRISHUL-SIM // C-UAS | DSSC OPERATIONAL TRAINER // SIH26247 DEFCON 3 OPERATION: EXERCISE DESERT SHIELD | 5 INGRESSING 00:17 SPLIT RADAR FLIR SCENARIO DEBRIEF VIDEO PORTAL INTEGRATED SENSOR SUITE ONLINE PRIMARY 3D AESA RADAR Sweep Mode: 360° PPI // 30 RPM Target Tracks: 5 ACTIVE Clutter Filter: NORMAL RF SPECTRUM WATERFALL DF BEARING LOCK 2.4 GHz ISM (C2 Link): -72 dBm 5.8 GHz VTX (FPV Feed): -92 dBm 868/915 MHz (LoRa C2): -85 dBm ACOUSTIC ARRAY 5200 Hz WHINE 4-ROTOR COAXIAL HARMONIC // QUADCOPTER HOVER CONTACT ROSTER (5) 5 AIRBORNE UAV-WING UAV-LOIT-01 RNG: 3676m // ALT: 255m INGRESS UAV-WING UAV-LOIT-02 RNG: 3524m // ALT: 255m INGRESS UAV-QUAD UAV-QUAD-03 RNG: 2725m // ALT: 96m INGRESS UAV-QUAD UAV-QUAD-04 RNG: 2715m // ALT: 117m INGRESS UAV-QUAD UAV-QUAD-05 RNG: 2748m // ALT: 103m INGRESS 3D AIR DEFENSE RADAR // 5,000M ENVELOPE ROTATION: 30 RPM // AESA MULTI-TRACK ACTIVE ALTITUDE: WGS-84 // ZOOM: SCROLL WHEEL DRAG MOUSE TO ORBIT // CLICK BLIP TO LOCK OPTICAL FLIR // THERMAL TRACKER WHOT BHOT IRONBOW NVG FOV: 2.9° // 12X OPTICAL LRF: 2725 M ALT: 96 M AGL TRACK: UAV-QUAD-03 LOCK: AUTO-CORR SENSOR: MWIR 640x512 COOLED 1X 4X 12X TRACK: UAV-QUAD-03 INGRESS SLANT RANGE: 2725 M ALTITUDE: 96 M AGL SPEED: 57 KM/H HEADING: 335° MAG RADAR RCS: -20 dBsm RF CONTROL: 2.4 GHz FHSS DSSC CLASSIFICATION TEST INCORRECT QUADCOPTER FPV KAMIKAZE FIXED WING TACTICAL PRIORITY: ALPHA BRAVO CHARLIE WEAPON 1: DIRECTIONAL RF JAMMER (SOFT-KILL) BEAM: 15° CONE 0° SNAP TO TARGET TRANSMITTING BEAM LOCK DWELL: 0% WEAPON 2: KINETIC NET POD AMMO: 7/8 FIRE INTERCEPTOR GNSS AREA SPOOFER STANDBY AREA DRIFT DISPERSION: ENGAGE SPOOFER DSSC TACTICAL AFTER-ACTION REVIEW (AAR) DIRECTING STAFF EVALUATION // EXERCISE COMPLETED GRADE: FAIL COMBAT READINESS: 10/100 CLASSIFICATION ACC: 33% SOFT / HARD KILLS: 0 / 0 BASE BREACHES: 0 TIME-TO-DETECT 7.4s EW DISCIPLINE 0% AMMO EFFICIENCY 0% AUTONOMOUS TACTICAL DOCTRINE INTELLIGENCE (OLLAMA LLAMA-3) **1. OPERATIONAL OVERVIEW** Unit conducted active air-defense during EXERCISE DESERT SHIELD. Total threat tracks neutralized: 0/5. Zero base perimeter damage sustained. Installation integrity maintained at 100%. Combat Readiness Score: **10/100** (Grade FAIL)  **2. TACTICAL STRENGTHS** • Electronic warfare discipline: 0 contacts neutralized via soft-kill directional RF jamming, conserving critical kinetic point-defense ammunition. • Target classification accuracy measured at 33% across 3 active contacts. • Time-to-First-Detection: 7.4s from radar boundary crossing. • Ammunition efficiency: 0% hit rate on kinetic interceptor rounds.  **3. DOCTRINAL DEFICIENCIES** • Maintained effective stand-off engagement posture throughout exercise. • Optimal ammo conservation achieved — kinetic reserves maintained. • Classification accuracy below doctrinal threshold (80%). Review sensor fusion training protocol.  **4. DSSC DIRECTING STAFF DIRECTIVES** Prioritize RF spectrum engagement at maximum stand-off range (>2500m). Deploy kinetic nets strictly against hardened loitering munitions or fast FPV terminal dives. Operator requires remedial C-UAS engagement training before qualification. EXPORT DOCTRINE REPORT CLOSE REVIEW RESTART SCENARIO",
+            "status": "PASS"
+          },
+          {
+            "button": "EXPORT DOCTRINE REPORT",
+            "expected": "Generate and trigger DSSC_TRISHUL_AAR_DEBRIEF text download",
+            "actual": "Export trigger executed successfully",
+            "status": "PASS"
+          }
+        ]
+      },
+      {
+        "frameId": "FRAME_9",
+        "name": "Tactical Video Briefing & Architecture Portal",
+        "screenshot": "/Users/abhishekmukherjee/Developer/hanku /pics_audit/vercel_09_tactical_portal.png",
+        "judgeQuestions": [
+          "Q9.1: Does portal load with zero 404 assets or broken routes?",
+          "Q9.2: Does the CTA button navigate seamlessly back to the simulator?"
+        ],
+        "buttonAudits": [
+          {
+            "button": "Portal CTA [LAUNCH SIMULATOR]",
+            "expected": "Navigate back to main simulator",
+            "actual": "Portal Title=\"TRISHUL-SIM // Tactical Gateway & Video Briefing\", Links=1, HasBackLink=false",
+            "status": "FAIL"
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "totalButtonsTested": 32,
+    "passedButtons": 24
+  }
+}
