@@ -96,7 +96,7 @@ export default function App() {
   }, [soundEnabled]);
 
   // Web Audio Synthesizer
-  const playTone = (freq, duration, type = 'sine') => {
+  const playTone = (freq, duration, type = 'sine', vol = 0.08) => {
     if (!soundEnabled) return;
     try {
       if (!audioCtxRef.current) {
@@ -109,7 +109,7 @@ export default function App() {
       const gain = ctx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.setValueAtTime(vol, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
       osc.connect(gain);
@@ -121,20 +121,55 @@ export default function App() {
     }
   };
 
+  // Tactical Audio Cues
+  const playRadarLock = () => {
+    playTone(1100, 0.06, 'sine', 0.09);
+    setTimeout(() => playTone(1450, 0.08, 'sine', 0.1), 70);
+  };
+
+  const playKillChirp = () => {
+    playTone(380, 0.1, 'triangle', 0.12);
+    setTimeout(() => playTone(760, 0.22, 'triangle', 0.14), 100);
+  };
+
+  const playBreachAlarm = () => {
+    playTone(850, 0.2, 'sawtooth', 0.15);
+    setTimeout(() => playTone(650, 0.25, 'sawtooth', 0.15), 180);
+  };
+
   // Sound cues on actions
   const handleToggleJammer = () => {
     if (!engineRef.current) return;
     const nextState = !engineRef.current.rfJammerActive;
     engineRef.current.toggleRfJammer(nextState);
-    if (nextState) playTone(180, 0.4, 'sawtooth');
+    if (nextState) playTone(180, 0.4, 'sawtooth', 0.1);
   };
 
   const handleFireKinetic = (targetId) => {
     if (!engineRef.current) return;
     if (engineRef.current.fireKineticNet(targetId)) {
-      playTone(450, 0.25, 'triangle');
+      playTone(450, 0.25, 'triangle', 0.12);
     }
   };
+
+  // Monitor kills and breaches to fire audio acknowledgements
+  const lastSoftKillsRef = useRef(0);
+  const lastHardKillsRef = useRef(0);
+  const lastBreachesRef = useRef(0);
+
+  useEffect(() => {
+    const m = engineState?.metrics;
+    if (!m) return;
+    if (m.neutralizedSoftKill > lastSoftKillsRef.current || m.neutralizedHardKill > lastHardKillsRef.current) {
+      playKillChirp();
+    }
+    if (m.breaches > lastBreachesRef.current) {
+      playBreachAlarm();
+    }
+    lastSoftKillsRef.current = m.neutralizedSoftKill || 0;
+    lastHardKillsRef.current = m.neutralizedHardKill || 0;
+    lastBreachesRef.current = m.breaches || 0;
+  }, [engineState?.metrics?.neutralizedSoftKill, engineState?.metrics?.neutralizedHardKill, engineState?.metrics?.breaches]);
 
   // Check Mission Completion to auto-open AAR
   useEffect(() => {
@@ -336,7 +371,10 @@ export default function App() {
                 return (
                   <div
                     key={d.id}
-                    onClick={() => engineRef.current?.selectDrone(d.id)}
+                    onClick={() => {
+                      engineRef.current?.selectDrone(d.id);
+                      playRadarLock();
+                    }}
                     className={`p-2 rounded border cursor-pointer transition-all mono-hud text-[11px] flex items-center justify-between ${
                       isSelected
                         ? 'bg-[#00ff66]/15 border-[#00ff66] text-white'
@@ -345,8 +383,10 @@ export default function App() {
                   >
                     <div>
                       <div className="font-bold flex items-center gap-1.5">
-                        <span className="text-[9px] px-1 rounded bg-black/60 text-gray-400">
-                          {d.type.code}
+                        <span className={`text-[9px] px-1 rounded ${
+                          d.classifiedAs ? 'bg-black/60 text-[#00ff66] font-bold' : 'bg-black/60 text-gray-500'
+                        }`}>
+                          {d.classifiedAs ? d.type.code : 'UNVERIFIED'}
                         </span>
                         <span>{d.id}</span>
                       </div>
@@ -396,6 +436,7 @@ export default function App() {
                 selectedDrone={selectedDrone}
                 rfJammerActive={rfJammerActive}
                 rfJammerAzimuth={rfJammerAzimuth}
+                rfJammerElevation={engineState.rfJammerElevation ?? 15}
                 interceptors={interceptors}
                 onSelectDrone={(id) => engineRef.current?.selectDrone(id)}
                 environment={environment}
@@ -413,7 +454,7 @@ export default function App() {
               }`}
             >
               <div className="h-[220px]">
-                <FLIRViewport selectedDrone={selectedDrone} />
+                <FLIRViewport selectedDrone={selectedDrone} environment={environment} />
               </div>
               <div className="flex-1">
                 <TargetTrackCard
@@ -431,10 +472,11 @@ export default function App() {
               selectedDrone={selectedDrone}
               rfJammerActive={rfJammerActive}
               rfJammerAzimuth={rfJammerAzimuth}
+              rfJammerElevation={engineState.rfJammerElevation ?? 15}
               gnssSpooferActive={gnssSpooferActive}
               kineticAmmo={kineticAmmo}
               onToggleJammer={handleToggleJammer}
-              onSetJammerAngle={(deg) => engineRef.current?.setJammerAngle(deg)}
+              onSetJammerAngle={(az, el) => engineRef.current?.setJammerAngle(az, el)}
               onFireKinetic={handleFireKinetic}
               onToggleSpoofer={() => engineRef.current?.toggleGnssSpoofer()}
             />
@@ -448,7 +490,6 @@ export default function App() {
         currentScenario={scenario}
         onSelectScenario={(id) => {
           engineRef.current?.loadScenario(id);
-          setBriefingOpen(false);
         }}
         onStart={() => setBriefingOpen(false)}
         onClose={() => setBriefingOpen(false)}

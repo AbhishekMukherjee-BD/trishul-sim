@@ -232,26 +232,53 @@ export class DroneAgent {
     return new THREE.Vector3();
   }
 
-  applyJamming(dt, jammerAngleDeg, maxJamRange = 5000.0) {
-    if (this.state !== AGENT_STATES.INGRESS) return false;
+  applyJamming(dt, jammerAzimuthDeg, jammerElevationDeg = 15.0, maxJamRange = 5000.0) {
+    if (this.state !== AGENT_STATES.INGRESS && this.state !== AGENT_STATES.EVADING) return false;
 
     const toDrone = new THREE.Vector3().subVectors(this.position, this.targetBase);
     const dist = toDrone.length();
-    if (dist > maxJamRange) return false;
+    if (dist > maxJamRange || dist <= 0.001) return false;
 
-    // Angle of drone relative to base
-    const droneAngleDeg = (Math.atan2(toDrone.x, toDrone.z) * 180 / Math.PI + 360) % 360;
-    const diff = Math.abs(((droneAngleDeg - jammerAngleDeg + 180) % 360) - 180);
+    // Unit vector towards drone
+    const droneDir = toDrone.clone().normalize();
 
-    // 20-degree conical beam
-    if (diff <= 20.0) {
-      this.jamDwellTimer += dt;
+    // Unit vector of jammer beam in 3D spherical coordinates (Azimuth θ from North/Z, Elevation φ from ground)
+    const azRad = (jammerAzimuthDeg) * (Math.PI / 180);
+    const elRad = (jammerElevationDeg) * (Math.PI / 180);
+    const jammerDir = new THREE.Vector3(
+      Math.sin(azRad) * Math.cos(elRad),
+      Math.sin(elRad),
+      Math.cos(azRad) * Math.cos(elRad)
+    ).normalize();
+
+    // 3D Solid Angle alignment via dot product: cos(angle) = A · B
+    const dot = Math.max(-1.0, Math.min(1.0, jammerDir.dot(droneDir)));
+    const angleDiffDeg = Math.acos(dot) * (180 / Math.PI);
+
+    // Realistic 15-degree conical beam solid angle
+    const inBeam = angleDiffDeg <= 15.0;
+
+    if (inBeam) {
+      // Inverse-square EM power propagation law & link susceptibility
+      // At close range (<1500m), power is intense; at standoff (>3500m), power density drops significantly
+      const rangeRatio = 1800.0 / Math.max(400.0, dist);
+      const powerDensityFactor = Math.min(2.5, Math.max(0.25, Math.pow(rangeRatio, 1.6)));
+      
+      // Electronic Warfare link susceptibility:
+      // Commercial 2.4GHz C2 is vulnerable (1.15x); 5.8GHz analog VTX is moderate (0.95x); 900MHz telemetry with frequency agility is hardened (0.75x)
+      const susceptibility = this.type.id === 'QUADCOPTER' ? 1.15 : this.type.id === 'FPV_KAMIKAZE' ? 0.95 : 0.75;
+      
+      const effectiveAccumulationRate = powerDensityFactor * susceptibility;
+      this.jamDwellTimer += dt * effectiveAccumulationRate;
+
+      // Base required dwell threshold (2.5s nominal at 1800m)
       if (this.jamDwellTimer >= 2.5) {
         this.state = AGENT_STATES.JAMMED_RTH;
         return true;
       }
     } else {
-      this.jamDwellTimer = Math.max(0, this.jamDwellTimer - dt * 0.5);
+      // Link recovery decay when beam wanders off target
+      this.jamDwellTimer = Math.max(0, this.jamDwellTimer - dt * 0.85);
     }
     return false;
   }

@@ -56,6 +56,7 @@ export class SwarmEngine {
     // Counter-measure assets
     this.rfJammerActive = false;
     this.rfJammerAzimuth = 0.0; // Degrees (0 to 360)
+    this.rfJammerElevation = 15.0; // Degrees (0 to 85, true 3D spherical beam)
     this.gnssSpooferActive = false;
     this.kineticAmmo = 8;
     this.activeKineticInterceptors = []; // In-flight projectile visualizers
@@ -127,8 +128,9 @@ export class SwarmEngine {
         const typeInfo = THREAT_TYPES[group.type];
         const y = typeInfo.defaultAltitude + (Math.random() - 0.5) * 40;
 
+        const trackId = `TRK-${String(1000 + idCounter++)}`;
         const drone = new DroneAgent(
-          `UAV-${group.type.substring(0, 4)}-${String(idCounter++).padStart(2, '0')}`,
+          trackId,
           group.type,
           new THREE.Vector3(x, y, z),
           baseOrigin
@@ -151,19 +153,27 @@ export class SwarmEngine {
 
     this.sessionMetrics.elapsedTime += dt;
 
-    // 1. Update In-Flight Kinetic Projectiles
+    // 1. Update In-Flight Kinetic Projectiles (Ballistic Lead Trajectory)
     for (let i = this.activeKineticInterceptors.length - 1; i >= 0; i--) {
       const proj = this.activeKineticInterceptors[i];
       proj.progress += dt / proj.flightDuration;
-      const targetDrone = this.drones.find(d => d.id === proj.targetId);
-      const endPos = targetDrone ? targetDrone.position : proj.targetPos;
-      proj.currentPos.lerpVectors(proj.startPos, endPos, Math.min(1.0, proj.progress));
+      const t = Math.min(1.0, proj.progress);
+
+      // Unguided ballistic trajectory towards calculated lead intercept point
+      const targetPos = proj.leadTargetPos || proj.targetPos;
+      proj.currentPos.lerpVectors(proj.startPos, targetPos, t);
+      proj.currentPos.y += Math.sin(t * Math.PI) * 45.0; // Parabolic gravity arc
       
       if (proj.progress >= 1.0) {
-        // Hit evaluation
+        // Proximity-sphere hit evaluation (55m kinetic net capture envelope)
+        const targetDrone = this.drones.find(d => d.id === proj.targetId);
         if (targetDrone && targetDrone.state !== AGENT_STATES.NEUTRALIZED) {
-          if (targetDrone.applyKineticHit()) {
-            this.sessionMetrics.neutralizedHardKill++;
+          const missDistance = proj.currentPos.distanceTo(targetDrone.position);
+          const netEnvelopeRadius = 55.0;
+          if (missDistance <= netEnvelopeRadius) {
+            if (targetDrone.applyKineticHit()) {
+              this.sessionMetrics.neutralizedHardKill++;
+            }
           }
         }
         this.activeKineticInterceptors.splice(i, 1);
@@ -174,9 +184,9 @@ export class SwarmEngine {
     for (const drone of this.drones) {
       const prevState = drone.state;
 
-      // Apply RF Jamming if active
+      // Apply RF Jamming with 3D Spherical Beam (Azimuth AND Elevation)
       if (this.rfJammerActive) {
-        if (drone.applyJamming(dt, this.rfJammerAzimuth)) {
+        if (drone.applyJamming(dt, this.rfJammerAzimuth, this.rfJammerElevation)) {
           if (prevState !== AGENT_STATES.JAMMED_RTH) {
             this.sessionMetrics.neutralizedSoftKill++;
           }
@@ -208,8 +218,22 @@ export class SwarmEngine {
     return this.drones.find(d => d.id === this.selectedDroneId) || null;
   }
 
-  setJammerAngle(azimuthDeg) {
-    this.rfJammerAzimuth = (azimuthDeg + 360) % 360;
+  setJammerAngle(azimuthDeg, elevationDeg = null) {
+    if (azimuthDeg !== null && azimuthDeg !== undefined) {
+      this.rfJammerAzimuth = (azimuthDeg + 360) % 360;
+    }
+    if (elevationDeg !== null && elevationDeg !== undefined) {
+      this.rfJammerElevation = Math.max(0, Math.min(85, elevationDeg));
+    } else {
+      const selected = this.drones.find(d => d.id === this.selectedDroneId);
+      if (selected) {
+        const toD = selected.position;
+        const groundDist = Math.max(1.0, Math.sqrt(toD.x * toD.x + toD.z * toD.z));
+        this.rfJammerElevation = Math.max(0, Math.min(85, (Math.atan2(toD.y, groundDist) * 180 / Math.PI)));
+      } else {
+        this.rfJammerElevation = 5.0;
+      }
+    }
     this.notify();
   }
 
@@ -236,10 +260,16 @@ export class SwarmEngine {
     const distance = startPos.distanceTo(targetPos);
     const flightDuration = Math.max(0.4, distance / 600.0); // 600 m/s rocket-propelled net
 
+    // Ballistic Lead Prediction: Calculate where drone will be at t = flightDuration
+    const leadTargetPos = targetPos.clone().add(
+      target.velocity.clone().multiplyScalar(flightDuration)
+    );
+
     this.activeKineticInterceptors.push({
       id: Math.random().toString(36).substring(7),
       targetId: target.id,
       startPos,
+      leadTargetPos,
       targetPos,
       currentPos: startPos.clone(),
       progress: 0.0,
@@ -275,6 +305,7 @@ export class SwarmEngine {
       selectedDrone: this.getSelectedDrone(),
       rfJammerActive: this.rfJammerActive,
       rfJammerAzimuth: this.rfJammerAzimuth,
+      rfJammerElevation: this.rfJammerElevation,
       gnssSpooferActive: this.gnssSpooferActive,
       kineticAmmo: this.kineticAmmo,
       interceptors: this.activeKineticInterceptors,

@@ -6,6 +6,7 @@ export default function RadarViewport({
   selectedDrone = null,
   rfJammerActive = false,
   rfJammerAzimuth = 0,
+  rfJammerElevation = 15,
   interceptors = [],
   onSelectDrone = () => {},
   environment = {}
@@ -22,6 +23,7 @@ export default function RadarViewport({
   // Drag / orbit state
   const isDraggingRef = useRef(false);
   const prevMouseRef = useRef({ x: 0, y: 0 });
+  const touchStateRef = useRef({ x: 0, y: 0, pinchDist: 0 });
   const cameraAngleRef = useRef({ theta: Math.PI / 4, phi: Math.PI / 3.2, radius: 4200 });
 
   useEffect(() => {
@@ -247,24 +249,27 @@ export default function RadarViewport({
     cameraRef.current.lookAt(0, 80, 0);
   };
 
-  // Update Jammer Conic Beam
+  // Update Jammer Conic Beam (3D Spherical Alignment: Azimuth & Elevation)
   useEffect(() => {
     if (!jammerConeRef.current) return;
     jammerConeRef.current.visible = rfJammerActive;
     if (rfJammerActive) {
-      const rad = (rfJammerAzimuth * Math.PI) / 180;
+      const azRad = (rfJammerAzimuth * Math.PI) / 180;
+      const elRad = (rfJammerElevation * Math.PI) / 180;
+      const beamDir = new THREE.Vector3(
+        Math.sin(azRad) * Math.cos(elRad),
+        Math.sin(elRad),
+        Math.cos(azRad) * Math.cos(elRad)
+      ).normalize();
+
       const halfLength = 1800;
-      jammerConeRef.current.position.set(
-        Math.sin(rad) * halfLength,
-        180,
-        Math.cos(rad) * halfLength
-      );
+      jammerConeRef.current.position.copy(beamDir.clone().multiplyScalar(halfLength));
       jammerConeRef.current.quaternion.setFromUnitVectors(
         new THREE.Vector3(0, 1, 0),
-        new THREE.Vector3(Math.sin(rad), 0.08, Math.cos(rad)).normalize()
+        beamDir
       );
     }
-  }, [rfJammerActive, rfJammerAzimuth]);
+  }, [rfJammerActive, rfJammerAzimuth, rfJammerElevation]);
 
   // Update Drones in 3D Scene — POOLED (no rebuild per frame)
   const dronePoolRef = useRef(new Map());
@@ -527,6 +532,52 @@ export default function RadarViewport({
     }
   };
 
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      isDraggingRef.current = true;
+      touchStateRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY, pinchDist: 0 };
+    } else if (e.touches.length === 2) {
+      isDraggingRef.current = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchStateRef.current.pinchDist = Math.hypot(dx, dy);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length === 1 && isDraggingRef.current) {
+      const dx = e.touches[0].clientX - touchStateRef.current.x;
+      const dy = e.touches[0].clientY - touchStateRef.current.y;
+      touchStateRef.current.x = e.touches[0].clientX;
+      touchStateRef.current.y = e.touches[0].clientY;
+
+      cameraAngleRef.current.theta -= dx * 0.006;
+      cameraAngleRef.current.phi = Math.max(
+        0.15,
+        Math.min(Math.PI / 2 - 0.05, cameraAngleRef.current.phi - dy * 0.006)
+      );
+      updateCameraPosition();
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.hypot(dx, dy);
+      if (touchStateRef.current.pinchDist > 0) {
+        const delta = touchStateRef.current.pinchDist - dist;
+        cameraAngleRef.current.radius = Math.max(
+          800,
+          Math.min(9500, cameraAngleRef.current.radius + delta * 8.0)
+        );
+        updateCameraPosition();
+      }
+      touchStateRef.current.pinchDist = dist;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    isDraggingRef.current = false;
+    touchStateRef.current.pinchDist = 0;
+  };
+
   return (
     <div
       ref={mountRef}
@@ -534,8 +585,11 @@ export default function RadarViewport({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       onClick={handleClick}
-      className="relative w-full h-full cursor-grab active:cursor-grabbing overflow-hidden"
+      className="relative w-full h-full cursor-grab active:cursor-grabbing overflow-hidden touch-none"
       style={{ minHeight: '380px' }}
     >
       {/* Tactical HUD Overlays */}

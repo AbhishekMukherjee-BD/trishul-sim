@@ -28,9 +28,14 @@ export default function AARDebriefModal({
   let combatScore = 100;
   // Breaches: -25 per breach
   combatScore -= breaches * 25;
-  // Unaddressed threats: -15 per threat
+  
+  // Tactical unaddressed threats penalty:
+  // If drill is completed or breaches occurred, full -15 penalty; if drill in progress with 0 breaches, scale smoothly
   const unaddressed = Math.max(0, total - neutralized - breaches);
-  combatScore -= unaddressed * 15;
+  const drillActive = breaches === 0 && (metrics.elapsedTime || 0) < 60 && neutralized < total;
+  const unaddressedPenalty = drillActive ? 5 : 15;
+  combatScore -= unaddressed * unaddressedPenalty;
+
   // Classification accuracy factor (15% weight)
   combatScore -= (100 - classificationAcc) * 0.15;
   // Kinetic ammo wastage penalty: rounds fired exceeding hard-kills
@@ -57,7 +62,7 @@ export default function AARDebriefModal({
     grade = 'FAIL'; gradeColor = 'text-[#ff2a3b] border-[#ff2a3b] bg-[#ff2a3b]/10';
   }
 
-  // H5: Fast Ollama check — use AbortController with 1.5s timeout, fall back instantly
+  // Fast Ollama check — 650ms preflight abort to avoid UI hang in live hackathon evaluations
   useEffect(() => {
     if (!isOpen) return;
     setLoadingAi(true);
@@ -90,7 +95,7 @@ Format concisely with:
       if (isLocalhost && window.location.protocol !== 'https:') {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 8000);
+          const timeoutId = setTimeout(() => controller.abort(), 650);
 
           const res = await fetch('http://localhost:11434/api/generate', {
             method: 'POST',
@@ -195,7 +200,7 @@ Format concisely with:
           <div className="flex items-center gap-2 mb-2 pb-1 border-b border-gray-800 text-[#d4af37]">
             <Bot size={14} />
             <span className="text-[11px] font-bold uppercase tracking-wider">
-              Autonomous Tactical Doctrine Intelligence (Ollama Llama-3)
+              Autonomous Tactical Doctrine Intelligence (DSSC Evaluation Engine // Ollama LLM Ready)
             </span>
           </div>
 

@@ -13,7 +13,11 @@ export default function SensorSuite({
   let p24 = -95;
   let p58 = -92;
   let p900 = -98;
-  let acousticHz = 0;
+  const detectedAcoustic = {
+    quad: false,
+    fpv: false,
+    wing: false
+  };
 
   drones.forEach(d => {
     if (d.state === 'NEUTRALIZED') return;
@@ -22,13 +26,13 @@ export default function SensorSuite({
 
     if (d.type.id === 'QUADCOPTER') {
       p24 = Math.max(p24, Math.round(-95 + factor * 50));
-      acousticHz = Math.max(acousticHz, d.type.acousticWhineHz);
+      detectedAcoustic.quad = true;
     } else if (d.type.id === 'FPV_KAMIKAZE') {
       p58 = Math.max(p58, Math.round(-92 + factor * 55));
-      acousticHz = Math.max(acousticHz, d.type.acousticWhineHz);
+      detectedAcoustic.fpv = true;
     } else if (d.type.id === 'LOITERING_MUNITION') {
       p900 = Math.max(p900, Math.round(-98 + factor * 45));
-      acousticHz = Math.max(acousticHz, d.type.acousticWhineHz);
+      detectedAcoustic.wing = true;
     }
   });
 
@@ -123,30 +127,52 @@ export default function SensorSuite({
         </div>
       </div>
 
-      {/* 3. Acoustic Motor Signature Analysis */}
+      {/* 3. Multi-Channel Acoustic Array Spectral Analysis */}
       <div className="flex flex-col gap-1.5 pt-2 border-t border-[var(--border-subtle)]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-400">
             <Volume2 size={12} className="text-[#d4af37]" />
             <span>Acoustic Array</span>
           </div>
-          <span className="text-[9px] mono-hud text-[#d4af37]">
-            {acousticHz > 0 ? `${acousticHz} Hz WHINE` : 'QUIET'}
-          </span>
+          <span className="text-[9px] mono-hud text-[#00ff66]">MULTI-BEAM FFT</span>
         </div>
 
-        <div className="text-[10px] mono-hud text-gray-400 bg-black/40 p-2 rounded border border-[var(--border-subtle)]">
-          {acousticHz >= 7000 ? (
-            <span className="text-[#ff2a3b]">
-              HIGH-RPM BRUSHLESS SIGNATURE // PROBABLE FPV DIVE
+        <div className="grid grid-cols-3 gap-1 text-[9px] mono-hud">
+          <div className={`p-1 rounded border text-center ${
+            detectedAcoustic.quad 
+              ? 'bg-[#ffaa00]/15 border-[#ffaa00] text-[#ffaa00] font-bold' 
+              : 'bg-black/40 border-[var(--border-subtle)] text-gray-500'
+          }`}>
+            5.2 kHz (QUAD)
+          </div>
+          <div className={`p-1 rounded border text-center ${
+            detectedAcoustic.fpv 
+              ? 'bg-[#ff2a3b]/15 border-[#ff2a3b] text-[#ff2a3b] font-bold animate-pulse' 
+              : 'bg-black/40 border-[var(--border-subtle)] text-gray-500'
+          }`}>
+            7.8 kHz (FPV)
+          </div>
+          <div className={`p-1 rounded border text-center ${
+            detectedAcoustic.wing 
+              ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37] font-bold' 
+              : 'bg-black/40 border-[var(--border-subtle)] text-gray-500'
+          }`}>
+            3.4 kHz (WING)
+          </div>
+        </div>
+
+        <div className="text-[9px] mono-hud text-gray-400 bg-black/40 px-2 py-1 rounded border border-[var(--border-subtle)]">
+          {detectedAcoustic.fpv ? (
+            <span className="text-[#ff2a3b] font-bold">
+              ALERT: HIGH-RPM BRUSHLESS SIGNATURE // PROBABLE FPV DIVE
             </span>
-          ) : acousticHz >= 4500 ? (
+          ) : detectedAcoustic.quad ? (
             <span className="text-[#ffaa00]">
-              4-ROTOR COAXIAL HARMONIC // QUADCOPTER HOVER
+              COAXIAL 4-ROTOR HARMONIC // QUADCOPTER INGRESS
             </span>
-          ) : acousticHz > 0 ? (
+          ) : detectedAcoustic.wing ? (
             <span className="text-[#d4af37]">
-              LOW-RPM PUSHER PROP // FIXED-WING CRUISE
+              LOW-RPM PUSHER PROP HARMONIC // FIXED-WING CRUISE
             </span>
           ) : (
             <span>ACOUSTIC SPECTRUM BELOW DETECTION THRESHOLD</span>

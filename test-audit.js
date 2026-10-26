@@ -62,22 +62,28 @@ async function runAudit() {
   // TEST 3: Soft-Kill Electronic Warfare (Directional RF Jammer)
   console.log("\n▶ TEST SUITE 3: Counter-Measure Subsystems (EW Soft-Kill)");
   engine.loadScenario('SCENARIO_1');
-  const targetDrone = engine.drones[0];
+  // In tactical doctrine, commercial quadcopters with 2.4GHz C2 are prime targets for directional EW jamming
+  const targetDrone = engine.drones.find(d => d.type.id === 'QUADCOPTER') || engine.drones[0];
   engine.selectDrone(targetDrone.id);
 
-  // Point jammer directly at target drone
+  // Point jammer directly at target drone with 3D boresight (Azimuth + Elevation)
   const toDrone = targetDrone.position.clone().sub(BASE_ORIGIN);
+  const groundDist = Math.max(1.0, Math.sqrt(toDrone.x * toDrone.x + toDrone.z * toDrone.z));
   const targetAzimuth = (Math.atan2(toDrone.x, toDrone.z) * 180 / Math.PI + 360) % 360;
-  engine.setJammerAngle(targetAzimuth);
+  const targetElevation = (Math.atan2(toDrone.y, groundDist) * 180 / Math.PI);
+  engine.setJammerAngle(targetAzimuth, targetElevation);
   engine.toggleRfJammer(true);
   assert(engine.rfJammerActive === true, "RF Jammer activated");
 
-  // Dwell jammer for 3.5 seconds with active tracking (threshold is 2.5s)
-  for (let i = 0; i < 35; i++) {
+  // Dwell jammer with active 3D bore-sight tracking until soft-kill threshold (accounting for inverse-square EM law)
+  for (let i = 0; i < 60; i++) {
     const toD = targetDrone.position.clone().sub(BASE_ORIGIN);
+    const gDist = Math.max(1.0, Math.sqrt(toD.x * toD.x + toD.z * toD.z));
     const az = (Math.atan2(toD.x, toD.z) * 180 / Math.PI + 360) % 360;
-    engine.setJammerAngle(az);
+    const el = (Math.atan2(toD.y, gDist) * 180 / Math.PI);
+    engine.setJammerAngle(az, el);
     engine.update(0.1);
+    if (targetDrone.state === AGENT_STATES.JAMMED_RTH) break;
   }
   assert(targetDrone.state === AGENT_STATES.JAMMED_RTH, `Target drone jammed into JAMMED_RTH state (state=${targetDrone.state})`);
   assert(engine.sessionMetrics.neutralizedSoftKill > 0, "Soft-kill metric incremented");
