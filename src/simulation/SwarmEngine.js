@@ -153,7 +153,7 @@ export class SwarmEngine {
 
     this.sessionMetrics.elapsedTime += dt;
 
-    // 1. Update In-Flight Kinetic Projectiles (Ballistic Lead Trajectory)
+    // 1. Update In-Flight Kinetic Projectiles (Ballistic Lead Trajectory & Multi-Target Cluster Burst)
     for (let i = this.activeKineticInterceptors.length - 1; i >= 0; i--) {
       const proj = this.activeKineticInterceptors[i];
       proj.progress += dt / proj.flightDuration;
@@ -163,16 +163,34 @@ export class SwarmEngine {
       const targetPos = proj.leadTargetPos || proj.targetPos;
       proj.currentPos.lerpVectors(proj.startPos, targetPos, t);
       proj.currentPos.y += Math.sin(t * Math.PI) * 45.0; // Parabolic gravity arc
-      
-      if (proj.progress >= 1.0) {
-        // Proximity-sphere hit evaluation (55m kinetic net capture envelope)
-        const targetDrone = this.drones.find(d => d.id === proj.targetId);
-        if (targetDrone && targetDrone.state !== AGENT_STATES.NEUTRALIZED) {
-          const missDistance = proj.currentPos.distanceTo(targetDrone.position);
+
+      const distanceFromOrigin = proj.currentPos.distanceTo(proj.startPos);
+      const isArmed = distanceFromOrigin >= 60.0; // Safety arming distance (60m)
+
+      let shouldDetonate = proj.progress >= 1.0;
+
+      // In-flight proximity fuze (armed and within 25m of any active threat)
+      if (isArmed && !shouldDetonate) {
+        for (const drone of this.drones) {
+          if (drone.state !== AGENT_STATES.NEUTRALIZED && proj.currentPos.distanceTo(drone.position) <= 25.0) {
+            shouldDetonate = true;
+            break;
+          }
+        }
+      }
+
+      if (shouldDetonate) {
+        if (isArmed) {
+          // Multi-target Proximity-sphere burst (55m kinetic net capture envelope)
           const netEnvelopeRadius = 55.0;
-          if (missDistance <= netEnvelopeRadius) {
-            if (targetDrone.applyKineticHit()) {
-              this.sessionMetrics.neutralizedHardKill++;
+          for (const drone of this.drones) {
+            if (drone.state !== AGENT_STATES.NEUTRALIZED) {
+              const missDistance = proj.currentPos.distanceTo(drone.position);
+              if (missDistance <= netEnvelopeRadius) {
+                if (drone.applyKineticHit()) {
+                  this.sessionMetrics.neutralizedHardKill++;
+                }
+              }
             }
           }
         }

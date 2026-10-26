@@ -9,7 +9,16 @@ export default function SensorSuite({
   selectedDrone = null,
   environment = {}
 }) {
-  // Compute RF spectrum power based on drone proximities
+  // Compute RF spectrum power using Friis transmission equation
+  const calculatePrx = (freqGhz, distMeters) => {
+    const d = Math.max(30, distMeters);
+    // Friis Path Loss: FSPL = 20*log10(d) + 20*log10(f_MHz) - 27.55
+    // Assumes +27 dBm (500mW) transmitter and 6 dBi C-UAS receiver dish
+    const fspl = 20 * Math.log10(d) + 20 * Math.log10(freqGhz * 1000) - 27.55;
+    const pRx = 33 - fspl;
+    return Math.max(-105, Math.min(-35, Math.round(pRx)));
+  };
+
   let p24 = -95;
   let p58 = -92;
   let p900 = -98;
@@ -22,19 +31,48 @@ export default function SensorSuite({
   drones.forEach(d => {
     if (d.state === 'NEUTRALIZED') return;
     const dist = d.position.distanceTo(SENSOR_ORIGIN);
-    const factor = Math.max(0, 1 - dist / 5000);
 
     if (d.type.id === 'QUADCOPTER') {
-      p24 = Math.max(p24, Math.round(-95 + factor * 50));
-      detectedAcoustic.quad = true;
+      p24 = Math.max(p24, calculatePrx(2.4, dist));
+      if (dist <= 650) detectedAcoustic.quad = true; // Physical limit: viscous air absorption
     } else if (d.type.id === 'FPV_KAMIKAZE') {
-      p58 = Math.max(p58, Math.round(-92 + factor * 55));
-      detectedAcoustic.fpv = true;
+      p58 = Math.max(p58, calculatePrx(5.8, dist));
+      if (dist <= 650) detectedAcoustic.fpv = true;
     } else if (d.type.id === 'LOITERING_MUNITION') {
-      p900 = Math.max(p900, Math.round(-98 + factor * 45));
-      detectedAcoustic.wing = true;
+      p900 = Math.max(p900, calculatePrx(0.9, dist));
+      if (dist <= 650) detectedAcoustic.wing = true;
     }
   });
+
+  // MAVLink v2.0 Protocol Bridge Telemetry
+  const [mavlinkStatus, setMavlinkStatus] = React.useState({
+    online: false,
+    protocol: 'MAVLink v2.0',
+    packets: 0
+  });
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+    fetch('http://localhost:8000/api/mavlink/sample_packets', { signal: controller.signal })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.packets) {
+          setMavlinkStatus({
+            online: true,
+            protocol: data.protocol || 'MAVLink v2.0',
+            packets: data.packets.length
+          });
+        }
+      })
+      .catch(() => {
+        setMavlinkStatus({
+          online: false,
+          protocol: 'MAVLink v2.0 (EMULATED)',
+          packets: 2
+        });
+      });
+    return () => controller.abort();
+  }, []);
 
   return (
     <div className="tactical-panel w-full flex flex-col gap-3 p-3">
@@ -46,7 +84,16 @@ export default function SensorSuite({
             INTEGRATED SENSOR SUITE
           </span>
         </div>
-        <span className="badge-radar text-[9px]">ONLINE</span>
+        <div className="flex items-center gap-1.5">
+          <span className={`text-[8px] mono-hud px-1.5 py-0.5 rounded border ${
+            mavlinkStatus.online
+              ? 'bg-[#00ff66]/10 border-[#00ff66] text-[#00ff66]'
+              : 'bg-white/5 border-[var(--border-subtle)] text-gray-400'
+          }`}>
+            {mavlinkStatus.online ? 'MAVLINK v2.0 LIVE' : 'MAVLINK v2.0 STANDALONE'}
+          </span>
+          <span className="badge-radar text-[9px]">ONLINE</span>
+        </div>
       </div>
 
       {/* 1. Primary 3D Radar Status */}

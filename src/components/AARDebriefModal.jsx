@@ -95,8 +95,39 @@ Format concisely with:
       if (isLocalhost && window.location.protocol !== 'https:') {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 650);
+          const timeoutId = setTimeout(() => controller.abort(), 6000); // 6.0s timeout for genuine LLM inference
 
+          // 1. Check Trishul Python Telemetry & Evaluation Server (localhost:8000)
+          try {
+            const pyRes = await fetch('http://localhost:8000/api/aar/evaluate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                scenario_name: scenario.name || 'Tactical Drill',
+                total_threats: total,
+                soft_kills: metrics.neutralizedSoftKill || 0,
+                hard_kills: metrics.neutralizedHardKill || 0,
+                breaches: breaches,
+                kinetic_rounds: metrics.kineticRoundsFired || 0,
+                classification_accuracy: classificationAcc,
+                elapsed_time_sec: Math.round(metrics.elapsedTime || 0)
+              }),
+              signal: controller.signal
+            });
+            if (pyRes.ok) {
+              const pyData = await pyRes.json();
+              if (pyData && pyData.debrief) {
+                clearTimeout(timeoutId);
+                setAiReport(pyData.debrief);
+                setLoadingAi(false);
+                return;
+              }
+            }
+          } catch (e) {
+            // Python endpoint unavailable, fallback to direct Ollama
+          }
+
+          // 2. Direct Ollama inference
           const res = await fetch('http://localhost:11434/api/generate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -144,14 +175,23 @@ Format concisely with:
                 DSSC TACTICAL AFTER-ACTION REVIEW (AAR)
               </div>
               <div className="text-[10px] text-[#d4af37] mono-hud">
-                DIRECTING STAFF EVALUATION // EXERCISE COMPLETED
+                {unaddressed > 0 
+                  ? `DIRECTING STAFF EVALUATION // INTERIM DEBRIEF (${unaddressed} ACTIVE INBOUND)`
+                  : 'DIRECTING STAFF EVALUATION // EXERCISE COMPLETED'}
               </div>
             </div>
           </div>
 
           {/* Grade Badge */}
-          <div className={`px-3 py-1 rounded border-2 font-mono font-bold text-[16px] ${gradeColor}`}>
-            GRADE: {grade}
+          <div className="flex flex-col items-end gap-1">
+            <div className={`px-3 py-1 rounded border-2 font-mono font-bold text-[16px] ${gradeColor}`}>
+              GRADE: {grade}
+            </div>
+            {unaddressed > 0 && (
+              <span className="text-[8px] mono-hud text-[#ffaa00] px-1 border border-[#ffaa00]/40 rounded bg-[#ffaa00]/10">
+                INCOMPLETE DRILL
+              </span>
+            )}
           </div>
         </div>
 

@@ -97,13 +97,11 @@ export class DroneAgent {
       fleeVector.y = 0.4; // Climb out
       this.acceleration.add(fleeVector.multiplyScalar(this.type.maxSpeed * 1.5));
     } else if (spooferActive) {
-      // GNSS Spoofer induces coordinate drift and erratic wandering
-      const wander = new THREE.Vector3(
-        (Math.random() - 0.5) * 50.0,
-        (Math.random() - 0.5) * 20.0,
-        (Math.random() - 0.5) * 50.0
-      );
-      this.acceleration.add(wander);
+      // GNSS Spoofer induces false velocity vector drift rather than 60Hz white noise jitter
+      const driftRate = this.type.id === 'LOITERING_MUNITION' ? 0.35 : 1.25;
+      const driftVector = new THREE.Vector3(-this.velocity.z, 0, this.velocity.x).normalize();
+      driftVector.multiplyScalar(this.type.maxSpeed * driftRate);
+      this.acceleration.add(driftVector);
     } else {
       // Standard Ingress + Reynolds Flocking
       const seekForce = this.seek(this.targetBase);
@@ -255,23 +253,34 @@ export class DroneAgent {
     const dot = Math.max(-1.0, Math.min(1.0, jammerDir.dot(droneDir)));
     const angleDiffDeg = Math.acos(dot) * (180 / Math.PI);
 
-    // Realistic 15-degree conical beam solid angle
-    const inBeam = angleDiffDeg <= 15.0;
+    // Antenna Pattern: Main beam (15° cone) with cosine taper + sidelobe envelope (-13 dB up to 25°)
+    let beamGain = 0;
+    if (angleDiffDeg <= 15.0) {
+      beamGain = Math.cos((angleDiffDeg / 15.0) * (Math.PI / 2));
+    } else if (angleDiffDeg <= 25.0) {
+      // Sidelobe envelope (-13 dB ≈ 0.05 power factor)
+      beamGain = 0.05 * (1.0 - (angleDiffDeg - 15.0) / 10.0);
+    }
 
-    if (inBeam) {
-      // Inverse-square EM power propagation law & link susceptibility
-      // At close range (<1500m), power is intense; at standoff (>3500m), power density drops significantly
-      const rangeRatio = 1800.0 / Math.max(400.0, dist);
-      const powerDensityFactor = Math.min(2.5, Math.max(0.25, Math.pow(rangeRatio, 1.6)));
+    if (beamGain > 0.01) {
+      // True 1/R^2 Inverse-Square Free-Space Path Loss & J/S Budget:
+      // Jammer Power Density at Drone: P_j ∝ 1 / R_j^2
+      // Infiltrator C2 Pilot Link: P_s ∝ 1 / R_c2^2 (nominal pilot standoff 3,200m)
+      const pilotDist = 3200.0;
+      const effectiveDist = Math.max(350.0, dist);
+      // J/S Power Ratio scaled by 1/R^2: (pilotDist / effectiveDist)^2
+      const jsPowerRatio = Math.min(4.0, Math.max(0.18, Math.pow(pilotDist / effectiveDist, 2.0) * 0.45));
       
       // Electronic Warfare link susceptibility:
-      // Commercial 2.4GHz C2 is vulnerable (1.15x); 5.8GHz analog VTX is moderate (0.95x); 900MHz telemetry with frequency agility is hardened (0.75x)
-      const susceptibility = this.type.id === 'QUADCOPTER' ? 1.15 : this.type.id === 'FPV_KAMIKAZE' ? 0.95 : 0.75;
+      // Commercial 2.4GHz ISM: vulnerable consumer link (1.20x)
+      // 5.8GHz analog VTX: moderate bandwidth (1.00x)
+      // 900MHz military FHSS: hardened frequency-hopping spread spectrum (0.75x)
+      const susceptibility = this.type.id === 'QUADCOPTER' ? 1.20 : this.type.id === 'FPV_KAMIKAZE' ? 1.00 : 0.75;
       
-      const effectiveAccumulationRate = powerDensityFactor * susceptibility;
+      const effectiveAccumulationRate = jsPowerRatio * beamGain * susceptibility;
       this.jamDwellTimer += dt * effectiveAccumulationRate;
 
-      // Base required dwell threshold (2.5s nominal at 1800m)
+      // Base required dwell threshold (2.5s nominal at burn-through)
       if (this.jamDwellTimer >= 2.5) {
         this.state = AGENT_STATES.JAMMED_RTH;
         return true;
