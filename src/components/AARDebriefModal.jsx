@@ -41,6 +41,14 @@ export default function AARDebriefModal({
   // Kinetic ammo wastage penalty: rounds fired exceeding hard-kills
   const wastedRounds = Math.max(0, (metrics.kineticRoundsFired || 0) - (metrics.neutralizedHardKill || 0));
   combatScore -= wastedRounds * 5;
+  // Spatial collateral hazard penalty: detonation inside base inner perimeter (<120m)
+  const collateralDetonations = metrics.closeProximityDetonations || 0;
+  combatScore -= collateralDetonations * 12;
+  // Continuous RF Spectrum Blinding penalty: prolonged jamming without hostile drone in beam
+  const jammerActiveSec = metrics.jammerActiveTime || 0;
+  const jammerTargetedSec = metrics.jammerTargetedTime || 0;
+  const isContinuousBlinding = jammerActiveSec > 15 && (jammerTargetedSec / jammerActiveSec) < 0.4;
+  if (isContinuousBlinding) combatScore -= 8;
   // TTD penalty: >10s = -5, >20s = -10
   if (ttd > 20) combatScore -= 10;
   else if (ttd > 10) combatScore -= 5;
@@ -152,7 +160,7 @@ Format concisely with:
       // High-Fidelity Local Tactical Doctrinal Rule Engine (instant)
       let debrief = `**1. OPERATIONAL OVERVIEW**\nUnit conducted active air-defense during ${scenario.name}. Total threat tracks neutralized: ${neutralized}/${total}. ${breaches === 0 ? 'Zero base perimeter damage sustained. Installation integrity maintained at 100%.' : `WARNING: ${breaches} hostile drone(s) penetrated inner perimeter — installation damage assessed.`}\nCombat Readiness Score: **${combatScore}/100** (Grade ${grade})\n\n`;
       debrief += `**2. TACTICAL STRENGTHS**\n• Electronic warfare discipline: ${metrics.neutralizedSoftKill || 0} contacts neutralized via soft-kill directional RF jamming, conserving critical kinetic point-defense ammunition.\n• Target classification accuracy measured at ${classificationAcc}% across ${metrics.classificationAttempts || 0} active contacts.\n• Time-to-First-Detection: ${ttd.toFixed(1)}s from radar boundary crossing.\n• Ammunition efficiency: ${ammoEfficiency}% hit rate on kinetic interceptor rounds.\n\n`;
-      debrief += `**3. DOCTRINAL DEFICIENCIES**\n• ${breaches > 0 ? 'CRITICAL: Failure to interdict dive-profile vectors prior to terminal 250m threshold. Re-evaluate engagement initiation timing.' : 'Maintained effective stand-off engagement posture throughout exercise.'}\n• ${metrics.kineticRoundsFired > 4 ? 'Ammunition expenditure rate exceeds optimal stand-off doctrine. Prioritize EW soft-kill at extended range.' : 'Optimal ammo conservation achieved — kinetic reserves maintained.'}\n• ${classificationAcc < 80 ? 'Classification accuracy below doctrinal threshold (80%). Review sensor fusion training protocol.' : 'Classification accuracy meets DSSC qualification standard.'}\n\n`;
+      debrief += `**3. DOCTRINAL DEFICIENCIES**\n• ${breaches > 0 ? 'CRITICAL: Failure to interdict dive-profile vectors prior to terminal 250m threshold. Re-evaluate engagement initiation timing.' : 'Maintained effective stand-off engagement posture throughout exercise.'}\n• ${metrics.kineticRoundsFired > 4 ? 'Ammunition expenditure rate exceeds optimal stand-off doctrine. Prioritize EW soft-kill at extended range.' : 'Optimal ammo conservation achieved — kinetic reserves maintained.'}\n• ${classificationAcc < 80 ? 'Classification accuracy below doctrinal threshold (80%). Review sensor fusion training protocol.' : 'Classification accuracy meets DSSC qualification standard.'}\n${collateralDetonations > 0 ? `• CRITICAL SAFETY BREACH: ${collateralDetonations} kinetic intercept(s) detonated inside base inner security zone (<120m). Severe fratricide/collateral debris hazard.\n` : ''}${isContinuousBlinding ? `• EW DOCTRINAL FLAW: RF Jammer active without threat lock-on for prolonged period. Violates EMCON discipline and blinds friendly comms.\n` : ''}\n`;
       debrief += `**4. DSSC DIRECTING STAFF DIRECTIVES**\nPrioritize RF spectrum engagement at maximum stand-off range (>2500m). Deploy kinetic nets strictly against hardened loitering munitions or fast FPV terminal dives. ${combatScore >= 80 ? 'Operator cleared for advanced multi-swarm qualification drill.' : 'Operator requires remedial C-UAS engagement training before qualification.'}`;
       setAiReport(debrief);
       setLoadingAi(false);

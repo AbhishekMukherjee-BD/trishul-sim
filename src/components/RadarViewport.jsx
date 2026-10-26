@@ -9,7 +9,8 @@ export default function RadarViewport({
   rfJammerElevation = 15,
   interceptors = [],
   onSelectDrone = () => {},
-  environment = {}
+  environment = {},
+  acousticAoA = null
 }) {
   const mountRef = useRef(null);
   const sceneRef = useRef(null);
@@ -19,6 +20,12 @@ export default function RadarViewport({
   const radarSweepMeshRef = useRef(null);
   const jammerConeRef = useRef(null);
   const interceptorGroupRef = useRef(null);
+  const acousticLineRef = useRef(null);
+
+  const dronesRef = useRef(drones);
+  const selectedDroneIdRef = useRef(selectedDrone?.id);
+  const sweepAngleRef = useRef(0);
+  const targetPaintTimeRef = useRef(new Map());
 
   // Drag / orbit state
   const isDraggingRef = useRef(false);
@@ -200,7 +207,25 @@ export default function RadarViewport({
     scene.add(interceptorGroup);
     interceptorGroupRef.current = interceptorGroup;
 
-    // 8. Animation Loop
+    // Acoustic AoA Strobe Line (Dashed Amber Strobe up to 650m)
+    const acousticGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0, 5, 0),
+      new THREE.Vector3(0, 5, 650)
+    ]);
+    const acousticMat = new THREE.LineDashedMaterial({
+      color: 0xffaa00,
+      dashSize: 30,
+      gapSize: 15,
+      transparent: true,
+      opacity: 0.75
+    });
+    const acousticLine = new THREE.Line(acousticGeo, acousticMat);
+    acousticLine.computeLineDistances();
+    acousticLine.visible = false;
+    scene.add(acousticLine);
+    acousticLineRef.current = acousticLine;
+
+    // 8. Animation Loop with Authentic Phosphor Persistence
     let animationFrameId;
     const clock = new THREE.Clock();
 
@@ -210,7 +235,40 @@ export default function RadarViewport({
 
       if (radarSweepMeshRef.current) {
         radarSweepMeshRef.current.rotation.y -= delta * 1.5;
+        let currentAz = (-radarSweepMeshRef.current.rotation.y) % (Math.PI * 2);
+        if (currentAz < 0) currentAz += Math.PI * 2;
+        sweepAngleRef.current = currentAz;
       }
+
+      // Pulse-Doppler sweep hit detection & phosphor decay
+      const now = performance.now();
+      const currentAz = sweepAngleRef.current;
+      const pool = dronePoolRef.current;
+      const selectedId = selectedDroneIdRef.current;
+
+      dronesRef.current?.forEach(drone => {
+        const pooled = pool?.get(drone.id);
+        if (!pooled) return;
+        const targetAz = (Math.atan2(drone.position.x, drone.position.z) + Math.PI * 2) % (Math.PI * 2);
+        let dAz = Math.abs(currentAz - targetAz);
+        if (dAz > Math.PI) dAz = Math.PI * 2 - dAz;
+
+        // Beam paint: 14° beam solid angle (~0.24 rad)
+        if (dAz < 0.24) {
+          targetPaintTimeRef.current.set(drone.id, now);
+        }
+
+        const lastPaint = targetPaintTimeRef.current.get(drone.id) || (now - 2200);
+        const elapsedSec = (now - lastPaint) / 1000;
+        const decay = Math.max(0.2, 1.0 - elapsedSec / 2.2);
+
+        const isSelected = drone.id === selectedId;
+        const effDecay = isSelected ? Math.max(0.85, decay) : decay;
+
+        if (pooled.bracketMat) pooled.bracketMat.opacity = effDecay * (isSelected ? 0.95 : 0.65);
+        if (pooled.hullMat) pooled.hullMat.emissiveIntensity = effDecay * (isSelected ? 0.9 : 0.45);
+        if (pooled.sprite) pooled.sprite.material.opacity = effDecay;
+      });
 
       renderer.render(scene, camera);
     };
@@ -276,6 +334,9 @@ export default function RadarViewport({
   const trailLinesRef = useRef(new Map());
 
   useEffect(() => {
+    dronesRef.current = drones;
+    selectedDroneIdRef.current = selectedDrone ? selectedDrone.id : null;
+
     if (!dronesGroupRef.current) return;
     const group = dronesGroupRef.current;
     const pool = dronePoolRef.current;
@@ -409,24 +470,36 @@ export default function RadarViewport({
       ];
       pooled.stalk.geometry.setFromPoints(stalkPoints);
 
+      // Aspect-dependent Swerling RCS calculation:
+      const headingRad = (drone.heading || 0) * (Math.PI / 180);
+      const headingVec = new THREE.Vector3(Math.sin(headingRad), 0, Math.cos(headingRad));
+      const losVec = drone.position.clone().negate().normalize();
+      const aspectCos = Math.abs(headingVec.dot(losVec));
+      const rcsDb = Math.round(-24 + 10 * (1 - aspectCos));
+
+      // Doppler Radial Velocity:
+      const vrMs = drone.velocity ? Math.round(drone.velocity.dot(losVec)) : 0;
+
       // Update label canvas (throttled via check)
       const distKm = (drone.position.distanceTo(new THREE.Vector3(0, 0, 0)) / 1000).toFixed(1);
-      const labelKey = `${drone.id}_${isSelected}_${distKm}_${Math.round(drone.altitude)}_${drone.state}`;
+      const labelKey = `${drone.id}_${isSelected}_${distKm}_${Math.round(drone.altitude)}_${rcsDb}_${vrMs}_${drone.state}`;
       if (pooled._lastLabelKey !== labelKey) {
         pooled._lastLabelKey = labelKey;
         const ctx = pooled.canvas.getContext('2d');
         ctx.clearRect(0, 0, 256, 64);
-        ctx.fillStyle = 'rgba(6, 8, 12, 0.75)';
+        ctx.fillStyle = 'rgba(6, 8, 12, 0.82)';
         ctx.fillRect(0, 0, 256, 64);
         ctx.strokeStyle = isSelected ? '#00ff66' : '#d4af37';
         ctx.lineWidth = 2;
         ctx.strokeRect(1, 1, 254, 62);
-        ctx.font = 'bold 22px monospace';
+        ctx.font = 'bold 20px monospace';
         ctx.fillStyle = isSelected ? '#00ff66' : '#ffffff';
-        ctx.fillText(drone.id, 10, 28);
-        ctx.font = '16px monospace';
+        ctx.fillText(drone.id, 10, 26);
+        ctx.font = '13px monospace';
         ctx.fillStyle = '#90a0b6';
-        ctx.fillText(`RNG:${distKm}k | ALT:${Math.round(drone.altitude)}m`, 10, 52);
+        ctx.fillText(`R:${distKm}k A:${Math.round(drone.altitude)}m RCS:${rcsDb}dB`, 10, 43);
+        ctx.fillStyle = vrMs > 0 ? '#ffaa00' : '#00ff66';
+        ctx.fillText(`DOPPLER: ${vrMs > 0 ? '+' : ''}${vrMs} m/s`, 10, 58);
         pooled.texture.needsUpdate = true;
       }
 
@@ -447,6 +520,22 @@ export default function RadarViewport({
       }
     });
   }, [drones, selectedDrone]);
+
+  // Update Acoustic AoA Directional Bearing Strobe Line
+  useEffect(() => {
+    if (!acousticLineRef.current) return;
+    if (acousticAoA !== null && acousticAoA !== undefined) {
+      const rad = (acousticAoA * Math.PI) / 180;
+      const endX = Math.sin(rad) * 650;
+      const endZ = Math.cos(rad) * 650;
+      const pts = [new THREE.Vector3(0, 5, 0), new THREE.Vector3(endX, 5, endZ)];
+      acousticLineRef.current.geometry.setFromPoints(pts);
+      acousticLineRef.current.computeLineDistances();
+      acousticLineRef.current.visible = true;
+    } else {
+      acousticLineRef.current.visible = false;
+    }
+  }, [acousticAoA]);
 
   // Update Kinetic Interceptors — POOLED
   const interceptorPoolRef = useRef([]);

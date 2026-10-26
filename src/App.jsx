@@ -31,6 +31,7 @@ export default function App() {
   const [aarOpen, setAarOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [bootDone, setBootDone] = useState(false); // M5: splash screen
+  const [acousticAoA, setAcousticAoA] = useState(null); // Directing Staff acoustic bearing
 
   const engineRef = useRef(null);
   const audioCtxRef = useRef(null);
@@ -79,6 +80,10 @@ export default function App() {
         }
       }
       else if (key === 'g') engineRef.current.toggleGnssSpoofer();
+      else if (key === 'p') {
+        const curScale = engineRef.current.timeScale;
+        engineRef.current.setTimeScale(curScale === 0 ? 1.0 : 0.0);
+      }
       else if (key === '1') { engineRef.current.loadScenario('SCENARIO_1'); setBriefingOpen(false); }
       else if (key === '2') { engineRef.current.loadScenario('SCENARIO_2'); setBriefingOpen(false); }
       else if (key === '3') { engineRef.current.loadScenario('SCENARIO_3'); setBriefingOpen(false); }
@@ -263,6 +268,46 @@ export default function App() {
               {String(Math.floor(metrics.elapsedTime / 60)).padStart(2, '0')}:{String(Math.floor(metrics.elapsedTime % 60)).padStart(2, '0')}
             </span>
           </div>
+
+          {/* Directing Staff Time Controls */}
+          <div className="flex bg-black/60 p-0.5 rounded border border-[var(--border-subtle)] text-[10px] mono-hud">
+            <button
+              onClick={() => engineRef.current?.setTimeScale(engineState.timeScale === 0 ? 1.0 : 0.0)}
+              className={`px-1.5 py-0.5 rounded font-bold ${
+                engineState.timeScale === 0 ? 'bg-[#ff2a3b] text-white' : 'text-gray-400 hover:text-white'
+              }`}
+              title="Directing Staff Pause/Resume (Key: P)"
+            >
+              {engineState.timeScale === 0 ? 'PAUSED' : 'PAUSE'}
+            </button>
+            <button
+              onClick={() => engineRef.current?.setTimeScale(0.5)}
+              className={`px-1.5 py-0.5 rounded font-bold ${
+                engineState.timeScale === 0.5 ? 'bg-[#d4af37] text-black' : 'text-gray-400 hover:text-white'
+              }`}
+              title="0.5x Slow-Motion Analysis"
+            >
+              0.5X
+            </button>
+            <button
+              onClick={() => engineRef.current?.setTimeScale(1.0)}
+              className={`px-1.5 py-0.5 rounded font-bold ${
+                engineState.timeScale === 1.0 ? 'bg-[#00ff66] text-black' : 'text-gray-400 hover:text-white'
+              }`}
+              title="1.0x Realtime Speed"
+            >
+              1.0X
+            </button>
+            <button
+              onClick={() => engineRef.current?.setTimeScale(2.0)}
+              className={`px-1.5 py-0.5 rounded font-bold ${
+                engineState.timeScale === 2.0 ? 'bg-[#00e5ff] text-black' : 'text-gray-400 hover:text-white'
+              }`}
+              title="2.0x Accelerated Time Dilation"
+            >
+              2.0X
+            </button>
+          </div>
         </div>
 
         {/* Right: Controls & Actions */}
@@ -351,6 +396,7 @@ export default function App() {
             drones={drones}
             selectedDrone={selectedDrone}
             environment={environment}
+            onAcousticAoAChange={(aoa) => setAcousticAoA(aoa)}
           />
 
           {/* Active Contacts Roster List */}
@@ -440,6 +486,7 @@ export default function App() {
                 interceptors={interceptors}
                 onSelectDrone={(id) => engineRef.current?.selectDrone(id)}
                 environment={environment}
+                acousticAoA={acousticAoA}
               />
             </div>
 
@@ -475,10 +522,12 @@ export default function App() {
               rfJammerElevation={engineState.rfJammerElevation ?? 15}
               gnssSpooferActive={gnssSpooferActive}
               kineticAmmo={kineticAmmo}
+              kineticArmed={engineState.kineticArmed ?? true}
               onToggleJammer={handleToggleJammer}
               onSetJammerAngle={(az, el) => engineRef.current?.setJammerAngle(az, el)}
               onFireKinetic={handleFireKinetic}
               onToggleSpoofer={() => engineRef.current?.toggleGnssSpoofer()}
+              onToggleArm={() => engineRef.current?.toggleKineticArm()}
             />
           </div>
         </section>

@@ -59,6 +59,8 @@ export class SwarmEngine {
     this.rfJammerElevation = 15.0; // Degrees (0 to 85, true 3D spherical beam)
     this.gnssSpooferActive = false;
     this.kineticAmmo = 8;
+    this.kineticArmed = true; // Two-stage firing interlock (DSSC fire-control doctrine)
+    this.timeScale = 1.0; // Directing staff drill time dilation (0.0=Pause, 0.5=Slow-Mo, 1.0=Realtime, 2.0=Fast)
     this.activeKineticInterceptors = []; // In-flight projectile visualizers
     
     // Sensor & environment
@@ -79,7 +81,10 @@ export class SwarmEngine {
       kineticRoundsFired: 0,
       classificationAttempts: 0,
       classificationCorrect: 0,
-      firstDetectionTime: null
+      firstDetectionTime: null,
+      closeProximityDetonations: 0, // Spatial collateral hazard (<120m to base)
+      jammerActiveTime: 0, // Total RF emitter active duration
+      jammerTargetedTime: 0 // Duration RF beam was locked onto a hostile drone
     };
 
     this.isRunning = false;
@@ -111,7 +116,10 @@ export class SwarmEngine {
       kineticRoundsFired: 0,
       classificationAttempts: 0,
       classificationCorrect: 0,
-      firstDetectionTime: null
+      firstDetectionTime: null,
+      closeProximityDetonations: 0,
+      jammerActiveTime: 0,
+      jammerTargetedTime: 0
     };
 
     // Spawn drones according to active scenario
@@ -151,18 +159,25 @@ export class SwarmEngine {
   update(dt) {
     if (!this.isRunning) return;
 
-    this.sessionMetrics.elapsedTime += dt;
+    const scaledDt = dt * this.timeScale;
+    if (scaledDt === 0) {
+      this.notify();
+      return;
+    }
+
+    this.sessionMetrics.elapsedTime += scaledDt;
 
     // 1. Update In-Flight Kinetic Projectiles (Ballistic Lead Trajectory & Multi-Target Cluster Burst)
     for (let i = this.activeKineticInterceptors.length - 1; i >= 0; i--) {
       const proj = this.activeKineticInterceptors[i];
-      proj.progress += dt / proj.flightDuration;
+      proj.progress += scaledDt / proj.flightDuration;
       const t = Math.min(1.0, proj.progress);
 
-      // Unguided ballistic trajectory towards calculated lead intercept point
+      // Unguided ballistic trajectory towards calculated 2nd-order lead intercept point
       const targetPos = proj.leadTargetPos || proj.targetPos;
       proj.currentPos.lerpVectors(proj.startPos, targetPos, t);
-      proj.currentPos.y += Math.sin(t * Math.PI) * 45.0; // Parabolic gravity arc
+      // Authentic Newtonian quadratic parabola under constant gravity: y = 4 * h * t * (1 - t)
+      proj.currentPos.y += 4.0 * 55.0 * t * (1.0 - t);
 
       const distanceFromOrigin = proj.currentPos.distanceTo(proj.startPos);
       const isArmed = distanceFromOrigin >= 60.0; // Safety arming distance (60m)
@@ -181,6 +196,12 @@ export class SwarmEngine {
 
       if (shouldDetonate) {
         if (isArmed) {
+          // Check spatial collateral hazard: detonation inside base inner perimeter (<120m)
+          const distToBase = proj.currentPos.distanceTo(BASE_ORIGIN);
+          if (distToBase < 120.0) {
+            this.sessionMetrics.closeProximityDetonations++;
+          }
+
           // Multi-target Proximity-sphere burst (55m kinetic net capture envelope)
           const netEnvelopeRadius = 55.0;
           for (const drone of this.drones) {
@@ -198,13 +219,36 @@ export class SwarmEngine {
       }
     }
 
-    // 2. Update Drone Agents
+    // 2. Update Drone Agents & Track RF Jammer Spectrum
+    if (this.rfJammerActive) {
+      this.sessionMetrics.jammerActiveTime += scaledDt;
+      let threatInBeam = false;
+      for (const drone of this.drones) {
+        if (drone.state !== AGENT_STATES.NEUTRALIZED) {
+          const toD = drone.position.clone().sub(BASE_ORIGIN);
+          const gDist = Math.max(1.0, Math.sqrt(toD.x * toD.x + toD.z * toD.z));
+          const az = (Math.atan2(toD.x, toD.z) * 180 / Math.PI + 360) % 360;
+          const el = (Math.atan2(toD.y, gDist) * 180 / Math.PI);
+          let dAz = Math.abs(az - this.rfJammerAzimuth);
+          if (dAz > 180) dAz = 360 - dAz;
+          const dEl = Math.abs(el - this.rfJammerElevation);
+          if (Math.hypot(dAz, dEl) <= 15.0) {
+            threatInBeam = true;
+            break;
+          }
+        }
+      }
+      if (threatInBeam) {
+        this.sessionMetrics.jammerTargetedTime += scaledDt;
+      }
+    }
+
     for (const drone of this.drones) {
       const prevState = drone.state;
 
       // Apply RF Jamming with 3D Spherical Beam (Azimuth AND Elevation)
       if (this.rfJammerActive) {
-        if (drone.applyJamming(dt, this.rfJammerAzimuth, this.rfJammerElevation)) {
+        if (drone.applyJamming(scaledDt, this.rfJammerAzimuth, this.rfJammerElevation)) {
           if (prevState !== AGENT_STATES.JAMMED_RTH) {
             this.sessionMetrics.neutralizedSoftKill++;
           }
@@ -212,7 +256,7 @@ export class SwarmEngine {
       }
 
       // Update kinematics
-      drone.update(dt, this.drones, this.gnssSpooferActive);
+      drone.update(scaledDt, this.drones, this.gnssSpooferActive);
 
       // Track perimeter breach
       if (prevState !== AGENT_STATES.BREACHED && drone.state === AGENT_STATES.BREACHED) {
@@ -265,8 +309,18 @@ export class SwarmEngine {
     this.notify();
   }
 
+  toggleKineticArm(armed) {
+    this.kineticArmed = typeof armed === 'boolean' ? armed : !this.kineticArmed;
+    this.notify();
+  }
+
+  setTimeScale(scale) {
+    this.timeScale = Math.max(0.0, Math.min(4.0, scale));
+    this.notify();
+  }
+
   fireKineticNet(targetDroneId) {
-    if (this.kineticAmmo <= 0) return false;
+    if (!this.kineticArmed || this.kineticAmmo <= 0) return false;
     const target = this.drones.find(d => d.id === targetDroneId);
     if (!target || target.state === AGENT_STATES.NEUTRALIZED) return false;
 
@@ -278,10 +332,12 @@ export class SwarmEngine {
     const distance = startPos.distanceTo(targetPos);
     const flightDuration = Math.max(0.4, distance / 600.0); // 600 m/s rocket-propelled net
 
-    // Ballistic Lead Prediction: Calculate where drone will be at t = flightDuration
-    const leadTargetPos = targetPos.clone().add(
-      target.velocity.clone().multiplyScalar(flightDuration)
-    );
+    // 2nd-Order Taylor Maneuver-Prediction Lead:
+    // P_lead = P0 + V * t + 0.5 * A * t^2
+    const targetAcc = target.currentAcceleration || target.acceleration || new THREE.Vector3(0, 0, 0);
+    const leadTargetPos = targetPos.clone()
+      .add(target.velocity.clone().multiplyScalar(flightDuration))
+      .add(targetAcc.clone().multiplyScalar(0.5 * flightDuration * flightDuration));
 
     this.activeKineticInterceptors.push({
       id: Math.random().toString(36).substring(7),
@@ -326,6 +382,8 @@ export class SwarmEngine {
       rfJammerElevation: this.rfJammerElevation,
       gnssSpooferActive: this.gnssSpooferActive,
       kineticAmmo: this.kineticAmmo,
+      kineticArmed: this.kineticArmed,
+      timeScale: this.timeScale,
       interceptors: this.activeKineticInterceptors,
       environment: this.environment,
       metrics: this.sessionMetrics,

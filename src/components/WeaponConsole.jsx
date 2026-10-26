@@ -8,10 +8,12 @@ export default function WeaponConsole({
   rfJammerElevation = 15,
   gnssSpooferActive = false,
   kineticAmmo = 8,
+  kineticArmed = true,
   onToggleJammer = () => {},
   onSetJammerAngle = () => {},
   onFireKinetic = () => {},
-  onToggleSpoofer = () => {}
+  onToggleSpoofer = () => {},
+  onToggleArm = () => {}
 }) {
   // Auto-Aim Jammer 3D Beam directly at selected target (Azimuth & Elevation)
   const handleSnapToTarget = () => {
@@ -119,7 +121,7 @@ export default function WeaponConsole({
       </div>
 
       {/* ── Weapon 2: Kinetic Net Interceptor Pod (Hard-Kill) ── */}
-      <div className="w-full md:w-auto bg-black/40 p-2.5 rounded border border-[var(--border-subtle)] flex flex-col gap-2 min-w-[260px]">
+      <div className="w-full md:w-auto bg-black/40 p-2.5 rounded border border-[var(--border-subtle)] flex flex-col gap-2 min-w-[270px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Crosshair size={14} className="text-[#ff2a3b]" />
@@ -127,9 +129,22 @@ export default function WeaponConsole({
               WEAPON 2: KINETIC NET POD
             </span>
           </div>
-          <span className="text-[10px] mono-hud text-[#d4af37]">
-            AMMO: {kineticAmmo}/8
-          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onToggleArm}
+              className={`px-1.5 py-0.5 text-[8px] mono-hud rounded border font-bold transition-all ${
+                kineticArmed
+                  ? 'bg-[#ff2a3b]/25 border-[#ff2a3b] text-[#ff2a3b] animate-pulse'
+                  : 'bg-amber-500/20 border-amber-500 text-[#ffaa00]'
+              }`}
+              title="Two-Stage Safety Arming Switch (DSSC Fire-Control Doctrine)"
+            >
+              {kineticArmed ? 'ARMED' : 'SAFE'}
+            </button>
+            <span className="text-[10px] mono-hud text-[#d4af37]">
+              AMMO: {kineticAmmo}/8
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center justify-between gap-3">
@@ -144,13 +159,23 @@ export default function WeaponConsole({
             ))}
           </div>
 
-          <button
-            onClick={() => selectedDrone && onFireKinetic(selectedDrone.id)}
-            disabled={!selectedDrone || kineticAmmo <= 0 || selectedDrone.state === 'NEUTRALIZED'}
-            className="btn-tactical btn-hostile py-1.5 px-4 text-[11px] font-bold disabled:opacity-40"
-          >
-            FIRE INTERCEPTOR
-          </button>
+          {kineticArmed ? (
+            <button
+              onClick={() => selectedDrone && onFireKinetic(selectedDrone.id)}
+              disabled={!selectedDrone || kineticAmmo <= 0 || selectedDrone.state === 'NEUTRALIZED'}
+              className="btn-tactical btn-hostile py-1.5 px-4 text-[11px] font-bold disabled:opacity-40"
+            >
+              FIRE INTERCEPTOR
+            </button>
+          ) : (
+            <button
+              onClick={onToggleArm}
+              className="btn-tactical py-1.5 px-4 text-[11px] font-bold bg-[#ffaa00]/20 text-[#ffaa00] border-[#ffaa00] hover:bg-[#ffaa00]/35"
+              title="Click to disengage safety and arm kinetic missile launcher"
+            >
+              ARM LAUNCHER
+            </button>
+          )}
         </div>
       </div>
 

@@ -8,17 +8,26 @@ export default function FLIRViewport({ selectedDrone = null, environment = {} })
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const noiseTickRef = useRef(0);
+  const gimbalAzRef = useRef(0);
+  const gimbalElRef = useRef(15);
+  const gimbalVelAzRef = useRef(0);
+  const gimbalVelElRef = useRef(0);
+  const extinctionRef = useRef(1.0);
   const lastDroneIdRef = useRef(null);
-  const slewOffsetRef = useRef({ x: 0, y: 0 });
 
-  // Dynamic gimbal slew simulation on target acquisition
+  // Closed-loop 3D gimbal servo slew initialization on target acquisition
   useEffect(() => {
     if (selectedDrone && selectedDrone.id !== lastDroneIdRef.current) {
       lastDroneIdRef.current = selectedDrone.id;
-      slewOffsetRef.current = {
-        x: (Math.random() - 0.5) * 70,
-        y: (Math.random() - 0.5) * 50
-      };
+      if (selectedDrone.position) {
+        const dPos = selectedDrone.position;
+        const groundDist = Math.max(1.0, Math.sqrt(dPos.x * dPos.x + dPos.z * dPos.z));
+        const targetAz = (Math.atan2(dPos.x, dPos.z) * 180 / Math.PI + 360) % 360;
+        const targetEl = Math.max(0, Math.min(85, Math.atan2(dPos.y, groundDist) * 180 / Math.PI));
+        // Mechanical servo offset: gimbal must slew across azimuth and elevation to achieve lock
+        gimbalAzRef.current = (targetAz + (Math.random() - 0.5) * 35 + 360) % 360;
+        gimbalElRef.current = Math.max(0, Math.min(85, targetEl + (Math.random() - 0.5) * 18));
+      }
     }
   }, [selectedDrone?.id]);
 
@@ -94,17 +103,54 @@ export default function FLIRViewport({ selectedDrone = null, environment = {} })
         }
       }
 
-      // 3. Render Target if active
+      // 3. Render Target if active (Closed-Loop Gimbal Servo PID Tracking)
       if (selectedDrone && selectedDrone.state !== 'NEUTRALIZED') {
-        // Gimbal pan slew damping towards optical center
-        slewOffsetRef.current.x *= 0.92;
-        slewOffsetRef.current.y *= 0.92;
+        const dPos = selectedDrone.position || { x: 0, y: 100, z: 2000 };
+        const groundDist = Math.max(1.0, Math.sqrt(dPos.x * dPos.x + dPos.z * dPos.z));
+        const targetAz = (Math.atan2(dPos.x, dPos.z) * 180 / Math.PI + 360) % 360;
+        const targetEl = Math.max(0, Math.min(85, Math.atan2(dPos.y, groundDist) * 180 / Math.PI));
 
-        const tgtX = w / 2 + Math.sin(tick * 0.8) * 8 + slewOffsetRef.current.x;
-        const tgtY = h / 2 + Math.cos(tick * 0.6) * 6 + slewOffsetRef.current.y;
-        
-        // Dynamic slant range scaling: target is larger up close, smaller at distance
-        const distM = selectedDrone.position ? selectedDrone.position.distanceTo({ x: 0, y: 0, z: 0 }) : 3000;
+        // Angular error between target and current gimbal optical boresight
+        let errAz = targetAz - gimbalAzRef.current;
+        if (errAz > 180) errAz -= 360;
+        if (errAz < -180) errAz += 360;
+        const errEl = targetEl - gimbalElRef.current;
+
+        // Closed-loop PID gimbal servo model (45°/s slew rate limit = 0.75°/frame @ 60Hz)
+        const maxSlewDeg = 0.75;
+        const targetVelAz = Math.max(-maxSlewDeg, Math.min(maxSlewDeg, errAz * 0.16));
+        const targetVelEl = Math.max(-maxSlewDeg, Math.min(maxSlewDeg, errEl * 0.16));
+
+        gimbalVelAzRef.current += (targetVelAz - gimbalVelAzRef.current) * 0.28;
+        gimbalVelElRef.current += (targetVelEl - gimbalVelElRef.current) * 0.28;
+
+        gimbalAzRef.current = (gimbalAzRef.current + gimbalVelAzRef.current + 360) % 360;
+        gimbalElRef.current = Math.max(0, Math.min(85, gimbalElRef.current + gimbalVelElRef.current));
+
+        // Remaining instantaneous angular error on optical focal plane
+        let optErrAz = targetAz - gimbalAzRef.current;
+        if (optErrAz > 180) optErrAz -= 360;
+        if (optErrAz < -180) optErrAz += 360;
+        const optErrEl = targetEl - gimbalElRef.current;
+
+        // Optical FOV (degrees): 35 deg at 1x, 8.75 deg at 4x, 2.9 deg at 12x
+        const fovDeg = 35.0 / zoomLevel;
+        const screenOffsetPxX = (optErrAz / fovDeg) * w;
+        const screenOffsetPxY = -(optErrEl / fovDeg) * h;
+
+        // Atmospheric micro-jitter
+        const jitterX = Math.sin(tick * 3.1) * 1.0;
+        const jitterY = Math.cos(tick * 2.7) * 0.8;
+
+        const tgtX = Math.max(25, Math.min(w - 25, w / 2 + screenOffsetPxX + jitterX));
+        const tgtY = Math.max(25, Math.min(h - 25, h / 2 + screenOffsetPxY + jitterY));
+
+        // Beer-Lambert Atmospheric Extinction: tau = exp(-gamma * R)
+        const distM = Math.sqrt(dPos.x * dPos.x + dPos.y * dPos.y + dPos.z * dPos.z);
+        const gamma = isFoggy ? (0.00032 * (1.0 + 1.2 * (environment.fogDensity || 0.6))) : 0.00007;
+        const tauExtinction = Math.max(0.18, Math.min(1.0, Math.exp(-gamma * distM)));
+        extinctionRef.current = tauExtinction;
+
         const rangeScale = Math.max(0.45, Math.min(2.4, 2600 / Math.max(400, distM)));
         const size = Math.max(14, Math.min(105, 34 * (zoomLevel / 4.0) * rangeScale));
         const droneType = selectedDrone.type ? selectedDrone.type.id : 'QUADCOPTER';
@@ -113,6 +159,7 @@ export default function FLIRViewport({ selectedDrone = null, environment = {} })
         const bankAngle = Math.sin(tick * 0.5) * 0.12;
 
         ctx.save();
+        ctx.globalAlpha = tauExtinction;
         ctx.translate(tgtX, tgtY);
         ctx.rotate(bankAngle);
 
@@ -356,11 +403,12 @@ export default function FLIRViewport({ selectedDrone = null, environment = {} })
 
         <div className="absolute top-2 right-2 text-[10px] mono-hud text-[#d4af37] pointer-events-none drop-shadow text-right">
           <div>TRACK: {selectedDrone ? selectedDrone.id : 'SEARCHING'}</div>
-          <div>LOCK: {selectedDrone ? 'AUTO-CORR' : 'STANDBY'}</div>
+          <div>LOCK: {selectedDrone ? 'CLOSED-LOOP PID' : 'STANDBY'}</div>
+          <div>GIMBAL: {Math.round(gimbalAzRef.current)}° AZ / {Math.round(gimbalElRef.current)}° EL</div>
         </div>
 
         <div className="absolute bottom-2 left-2 text-[9px] mono-hud text-gray-400 pointer-events-none">
-          SENSOR: MWIR 640x512 COOLED
+          SENSOR: MWIR 640x512 COOLED // TAU: {Math.round(extinctionRef.current * 100)}%
         </div>
 
         {/* Zoom selector */}

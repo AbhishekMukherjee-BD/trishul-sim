@@ -7,7 +7,8 @@ const SENSOR_ORIGIN = new THREE.Vector3(0, 0, 0);
 export default function SensorSuite({
   drones = [],
   selectedDrone = null,
-  environment = {}
+  environment = {},
+  onAcousticAoAChange = () => {}
 }) {
   // Compute RF spectrum power using Friis transmission equation
   const calculatePrx = (freqGhz, distMeters) => {
@@ -28,21 +29,46 @@ export default function SensorSuite({
     wing: false
   };
 
+  let nearestAcousticDist = 99999;
+  let computedAcousticAoA = null;
+
   drones.forEach(d => {
     if (d.state === 'NEUTRALIZED') return;
     const dist = d.position.distanceTo(SENSOR_ORIGIN);
 
     if (d.type.id === 'QUADCOPTER') {
       p24 = Math.max(p24, calculatePrx(2.4, dist));
-      if (dist <= 650) detectedAcoustic.quad = true; // Physical limit: viscous air absorption
+      if (dist <= 650) {
+        detectedAcoustic.quad = true; // Physical limit: viscous air absorption
+        if (dist < nearestAcousticDist) {
+          nearestAcousticDist = dist;
+          computedAcousticAoA = Math.round((Math.atan2(d.position.x, d.position.z) * 180 / Math.PI + 360) % 360);
+        }
+      }
     } else if (d.type.id === 'FPV_KAMIKAZE') {
       p58 = Math.max(p58, calculatePrx(5.8, dist));
-      if (dist <= 650) detectedAcoustic.fpv = true;
+      if (dist <= 650) {
+        detectedAcoustic.fpv = true;
+        if (dist < nearestAcousticDist) {
+          nearestAcousticDist = dist;
+          computedAcousticAoA = Math.round((Math.atan2(d.position.x, d.position.z) * 180 / Math.PI + 360) % 360);
+        }
+      }
     } else if (d.type.id === 'LOITERING_MUNITION') {
       p900 = Math.max(p900, calculatePrx(0.9, dist));
-      if (dist <= 650) detectedAcoustic.wing = true;
+      if (dist <= 650) {
+        detectedAcoustic.wing = true;
+        if (dist < nearestAcousticDist) {
+          nearestAcousticDist = dist;
+          computedAcousticAoA = Math.round((Math.atan2(d.position.x, d.position.z) * 180 / Math.PI + 360) % 360);
+        }
+      }
     }
   });
+
+  React.useEffect(() => {
+    onAcousticAoAChange(computedAcousticAoA);
+  }, [computedAcousticAoA]);
 
   // MAVLink v2.0 Protocol Bridge Telemetry
   const [mavlinkStatus, setMavlinkStatus] = React.useState({
@@ -194,7 +220,9 @@ export default function SensorSuite({
             <Volume2 size={12} className="text-[#d4af37]" />
             <span>Acoustic Array</span>
           </div>
-          <span className="text-[9px] mono-hud text-[#00ff66]">MULTI-BEAM FFT</span>
+          <span className="text-[9px] mono-hud text-[#00ff66]">
+            {computedAcousticAoA !== null ? `AoA: ${computedAcousticAoA}° (±3° TDoA)` : 'MULTI-BEAM FFT'}
+          </span>
         </div>
 
         <div className="grid grid-cols-3 gap-1 text-[9px] mono-hud">

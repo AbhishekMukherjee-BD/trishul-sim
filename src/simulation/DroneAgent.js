@@ -57,6 +57,7 @@ export class DroneAgent {
     this.position = startPos.clone();
     this.velocity = new THREE.Vector3().subVectors(targetBase, startPos).normalize().multiplyScalar(this.type.maxSpeed * 0.5);
     this.acceleration = new THREE.Vector3();
+    this.currentAcceleration = new THREE.Vector3();
     this.targetBase = targetBase;
     
     this.state = AGENT_STATES.INGRESS;
@@ -122,6 +123,7 @@ export class DroneAgent {
     }
 
     // 2. Integrate Velocity & Position (Euler)
+    this.currentAcceleration.copy(this.acceleration);
     this.velocity.add(this.acceleration.multiplyScalar(dt));
     this.velocity.clampLength(0, this.type.maxSpeed);
     this.position.add(this.velocity.clone().multiplyScalar(dt));

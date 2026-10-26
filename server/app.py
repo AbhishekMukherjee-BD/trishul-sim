@@ -61,6 +61,9 @@ class TrishulHandler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
 
+    def do_HEAD(self):
+        self.do_GET()
+
     def do_GET(self):
         if self.path == '/api/health':
             self.send_response(200)
@@ -153,10 +156,13 @@ Unit successfully intercepted {soft + hard}/{total} hostile UAS tracks during {s
 **4. DSSC DIRECTING STAFF DIRECTIVES**
 Maintain primary RF jamming lock beyond 2,500m stand-off distance. Reserve kinetic net pods for high-speed terminal diving munitions. Operator combat-qualified for multi-agent swarm defense."""
 
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"debrief": debrief_result}).encode('utf-8'))
+            try:
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps({"debrief": debrief_result}).encode('utf-8'))
+            except (BrokenPipeError, ConnectionResetError):
+                pass
         else:
             self.send_response(404)
             self.end_headers()
